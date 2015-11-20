@@ -1,0 +1,31 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="android:actionBarStyle"   tools:ignore="NewApi">@style/MyActionBar</item>-->
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+    </style>
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background"  tools:ignore="NewApi">@android:color/background_light</item>
+        <item name="background">@color/color_primary</item>
+    </style>
+
+    <style name="FlatWaveColorButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="android:background">@null</item>
+        <item name="rd_backgroundColor">@android:color/transparent</item>
+        <item name="rd_rippleColor">@color/shadow_transparent</item>
+        <item name="rd_cornerRadius">4dp</item>
+    </style>
+
+    <style name="FloatingWaveColorActionButton" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="rd_rippleColor">@color/color_primary_dark</item>
+        <item name="fab_backgroundColor">@color/color_primary</item>
+        <item name="fab_elevation">4dp</item>
+        <item name="rd_delayClick">afterRelease</item>
+    </style>
+
+</resources>

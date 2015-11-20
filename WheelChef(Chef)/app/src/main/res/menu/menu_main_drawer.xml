@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home_item"
+            android:checked="false"
+            android:icon="@drawable/ic_map_black_24dp"
+            android:title="@string/home_fragment" />
+
+        <item
+            android:id="@+id/order_item"
+            android:checked="false"
+            android:icon="@drawable/ic_book_black_24dp"
+            android:title="@string/current_order_fragment" />
+
+        <item
+            android:id="@+id/payment_item"
+            android:checked="false"
+            android:icon="@drawable/ic_payment_black_24dp"
+            android:title="@string/payment_fragment" />
+
+        <item
+            android:id="@+id/history_item"
+            android:checked="false"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history_fragment" />
+
+
+        <item
+            android:id="@+id/logout_item"
+            android:checked="false"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/log_out" />
+
+    </group>
+</menu>

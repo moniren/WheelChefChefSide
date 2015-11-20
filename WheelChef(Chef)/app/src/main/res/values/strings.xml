@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WheelChef(Chef)</string>
+
+
+    <string name="home_fragment">Home</string>
+    <string name="my_account_fragment">My Account</string>
+    <string name="current_order_fragment">Current Order</string>
+    <string name="payment_fragment">Payment</string>
+    <string name="history_fragment">History</string>
+    <string name="log_out">Log Out</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_viewchefinfo">View Chef Info</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_activity_lyk">Map</string>
+    <string name="view_chef_dialog_view_chef_details">View Chef Details</string>
+    <string name="view_chef_activity_view_chef_distance">Distance: </string>
+    <string name="view_chef_activity_view_chef_time">Delivery Time: </string>
+</resources>

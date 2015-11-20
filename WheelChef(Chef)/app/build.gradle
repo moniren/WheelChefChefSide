@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.wheelchef.wheelchefchef"
+        minSdkVersion 17
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        repositories {
+            maven { url 'https://oss.sonatype.org/content/repositories/ksoap2-android-releases/' }
+        }
+    }
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.5.0'
+    compile 'com.github.rey5137:material:1.2.1'
+    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'com.mxn.soul:flowingdrawer-core:1.2.0'
+    compile 'com.android.support:design:23.0.1'
+    //this library already included its own nineoldandroids libraries
+    //very tricky here
+    compile ('com.gordonwong:material-sheet-fab:1.2') {
+        exclude group: 'com.nineoldandroids'
+    }
+}

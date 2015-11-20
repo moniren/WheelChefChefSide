@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#e64e40</color>
+    <color name="color_primary_dark">#c94438</color>
+    <color name="shadow_transparent">#33000000</color>
+    <color name="amber">#FFC107</color>
+    <color name="single_line_line">#CDC5BA</color>
+    <color name="window_dark">#303030</color>
+</resources>

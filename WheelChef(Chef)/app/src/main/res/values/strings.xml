@@ -16,4 +16,5 @@
     <string name="view_chef_dialog_view_chef_details">View Chef Details</string>
     <string name="view_chef_activity_view_chef_distance">Distance: </string>
     <string name="view_chef_activity_view_chef_time">Delivery Time: </string>
+    <string name="prompt_spinner_category">Category: </string>
 </resources>

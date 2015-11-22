@@ -36,46 +36,105 @@
               tools:context="com.wheelchef.wheelchef.registerlogin.RegisterActivity"
               android:padding="10dp">
 
-    <TextView
-        android:text="Username (or Email Address?)"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
+    <com.rey.material.widget.EditText
         android:id="@+id/etUsername"
+        style = "@style/CustomEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:hint="Enter your username"
+        app:et_inputId="@+id/textfield_et_username_input"
+        app:et_supportMode="charCounter"
+        app:et_supportMaxChars="20"/>
 
-    <TextView
-        android:text="Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
+    <com.rey.material.widget.EditText
         android:id="@+id/etPassword"
+        style = "@style/CustomEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:inputType="textPassword"
-        android:layout_marginBottom="10dp"/>
+        android:textSize="15sp"
+        android:hint="Enter your password"
+        app:et_inputId="@+id/textfield_et_password_input"
+        app:et_supportMode="charCounter"
+        app:et_supportMaxChars="20"/>
 
-    <TextView
-        android:text="Confirm Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/etConfirmPassword"
+    <com.rey.material.widget.EditText
+        android:id="@+id/etRePassword"
+        style = "@style/CustomEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:inputType="textPassword"
-        android:layout_marginBottom="10dp"/>
+        android:textSize="15sp"
+        android:hint="Re-enter your password"
+        app:et_inputId="@+id/textfield_et_re_password_input"
+        app:et_supportMode="charCounter"
+        app:et_supportMaxChars="20"/>
+
+    <com.rey.material.widget.EditText
+        android:id="@+id/etAddress"
+        style = "@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:inputType="textMultiLine"
+        android:textSize="15sp"
+        android:hint="Enter your address"
+        app:et_inputId="@+id/textfield_et_address_input"
+        app:et_supportMode="none"/>
+
+    <com.rey.material.widget.EditText
+        android:id="@+id/etZipCode"
+        style = "@style/CustomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:inputType="number"
+        android:textSize="15sp"
+        android:hint="Enter your postal code"
+        app:et_inputId="@+id/textfield_et_zipcode_input"
+        app:et_supportMode="none"
+        android:maxLength="6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <com.rey.material.widget.CheckBox
+            style="@style/CustomCheckBoxDrawable"
+            android:id="@+id/checkbox_in_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:gravity="left|center_vertical"
+            android:text="I'm in my home!"/>
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="128dp"
+            android:gravity="right|center_vertical"
+            android:prompt="@string/prompt_spinner_category"/>
+    </LinearLayout>
+
+
 
     <com.rey.material.widget.Button
-        android:background="@color/amber"
+        android:background="@color/color_accent"
         style="@style/FlatWaveColorButtonRippleStyle"
         android:id="@+id/bRegister"
         android:text="Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:rd_enable="true"
         app:rd_rippleType="wave"
         app:rd_delayClick="afterRelease"/>

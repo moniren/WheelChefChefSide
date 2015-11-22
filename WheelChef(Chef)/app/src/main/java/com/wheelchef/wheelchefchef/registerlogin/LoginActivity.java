@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.rey.material.widget.EditText;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
@@ -36,13 +36,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivity";
 
     public static final String NEEDVERIFY = "need_verify";
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MSG = "message";
+
     // Progress Dialog
     private ProgressDialog pDialog;
     // Creating JSON Parser object
-    JSONParser jParser = new JSONParser();
+    private JSONParser jParser = new JSONParser();
 
 
     @Override
@@ -113,8 +111,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             try {
                 // Checking for SUCCESS TAG
-                success = json.getInt(TAG_SUCCESS);
-                msg = json.getString(TAG_MSG);
+                success = json.getInt(ConnectionParams.TAG_SUCCESS);
+                msg = json.getString(ConnectionParams.TAG_MSG);
 
             } catch (JSONException e) {
                 e.printStackTrace();

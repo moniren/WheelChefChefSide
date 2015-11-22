@@ -36,27 +36,54 @@
         tools:context="com.wheelchef.wheelchef.registerlogin.LoginActivity"
         android:padding="10dp">
 
-        <TextView
-            android:text="Username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:text="Username"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <EditText
+        <!--<EditText-->
+            <!--android:id="@+id/etUsername"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"/>-->
+
+        <!--<TextView-->
+            <!--android:text="Password"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<EditText-->
+            <!--android:id="@+id/etPassword"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:layout_marginBottom="10dp"/>-->
+
+        <com.rey.material.widget.EditText
             android:id="@+id/etUsername"
+            style = "@style/CustomEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:hint="Enter your username"
+            app:et_inputId="@+id/textfield_et_username_input"
+            app:et_supportMode="charCounter"
+            app:et_supportMaxChars="20"/>
 
-        <TextView
-            android:text="Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
+        <com.rey.material.widget.EditText
             android:id="@+id/etPassword"
+            style = "@style/CustomEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:inputType="textPassword"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="15sp"
+            android:hint="Enter your password"
+            app:et_inputId="@+id/textfield_et_password_input"
+            app:et_supportMode="charCounter"
+            app:et_supportMaxChars="20"/>
 
         <com.rey.material.widget.Button
             android:background="@color/color_primary"
@@ -65,19 +92,17 @@
             android:text="Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginBottom="20dp"
             app:rd_enable="true"
             app:rd_rippleType="wave"
             app:rd_delayClick="afterRelease"  />
         <com.rey.material.widget.Button
-            android:background="@color/amber"
+            android:background="@color/color_accent"
             style="@style/FlatWaveColorButtonRippleStyle"
             android:id="@+id/bRegisterLink"
             android:text="Register Here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             app:rd_enable="true"
             app:rd_rippleType="wave"
             app:rd_delayClick="afterRelease" />

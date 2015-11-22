@@ -28,4 +28,45 @@
         <item name="rd_delayClick">afterRelease</item>
     </style>
 
+    <style name="CustomEditText"  parent="Material.Widget.EditText">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
+        <item name="android:textColorHint">@color/abc_secondary_text_material_dark</item>
+        <item name="et_dividerColor">@drawable/color_divider</item>
+        <item name="et_labelTextColor">@drawable/color_label</item>
+        <item name="et_supportTextErrorColor">#FFFF0000</item>
+        <item name="et_dividerErrorColor">#FFFF0000</item>
+    </style>
+
+    <style name="CustomCheckBoxDrawable" parent="Material.Drawable.CheckBox">
+        <item name="cbd_strokeColor">@drawable/color_switch</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+    </style>
+
+    <style name="CustomSpinner" parent="Material.Widget.Spinner">
+        <item name="rd_style">@style/Material.Drawable.Ripple.Wave</item>
+        <item name="spn_labelEnable">true</item>
+        <item name="spn_arrowSwitchMode">true</item>
+        <item name="spn_arrowAnimDuration">@android:integer/config_shortAnimTime</item>
+        <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
+        <item name="spn_arrowColor">@color/color_accent</item>
+        <item name="android:popupBackground">@color/background_material_dark</item>
+    </style>
+
+    <style name="CustomSpinnerNoArrow" parent="CustomSpinner">
+        <item name="spn_arrowSize">0dp</item>
+        <item name="spn_popupItemAnimation">@anim/abc_fade_in</item>
+    </style>
+
+    <style name="CustomSpinnerItem" parent="Material.Drawable.Ripple.Wave">
+        <item name="rd_rippleColor">@color/shadow_transparent</item>
+        <item name="rd_rippleAnimDuration">300</item>
+        <item name="rd_maskType">rectangle</item>
+        <item name="rd_cornerRadius">0dp</item>
+        <item name="rd_delayClick">afterRelease</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
+    </style>
+
 </resources>

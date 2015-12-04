@@ -18,4 +18,14 @@
     <string name="view_chef_activity_view_chef_distance">Distance: </string>
     <string name="view_chef_activity_view_chef_time">Delivery Time: </string>
     <string name="prompt_spinner_category">Category: </string>
+    <string-array name="spinner_category">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

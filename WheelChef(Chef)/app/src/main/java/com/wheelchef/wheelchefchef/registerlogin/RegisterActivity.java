@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -13,9 +14,12 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -37,16 +41,18 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button bRegister;
-    private EditText etUsername, etPassword, etConfirmPassword, etAddress, etZipcode;
+    private EditText etUsername, etPassword, etConfirmPassword, etPhoneNumber, etAddressRoad, etAddressBlk, etAddressUnit, etZipcode;
     private Spinner spCategory;
     private CheckBox cbInHome;
 
-    private String username, password, confirmPassword, addressString, category;
+    private String username, password, confirmPassword, phoneNumber, addressString, category;
     private int zipcode;
     private float latitude, longitude;
     private String[] items;
@@ -63,13 +69,17 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+            setContentView(R.layout.activity_register);
+
 
         bRegister = (Button) findViewById(R.id.bRegister);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etConfirmPassword = (EditText) findViewById(R.id.etRePassword);
-        etAddress = (EditText) findViewById(R.id.etAddress);
+        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
+        etAddressRoad = (EditText) findViewById(R.id.etAddressRoad);
+        etAddressBlk = (EditText) findViewById(R.id.etAddressBlk);
+        etAddressUnit = (EditText) findViewById(R.id.etAddressUnit);
         etZipcode = (EditText) findViewById(R.id.etZipCode);
         spCategory = (Spinner) findViewById(R.id.spinner_category);
         cbInHome = (CheckBox) findViewById(R.id.checkbox_in_home);
@@ -92,7 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
                 confirmPassword = etConfirmPassword.getText().toString();
-                addressString = etAddress.getText().toString();
+                phoneNumber = etPhoneNumber.getText().toString();
+                addressString = etAddressRoad.getText().toString() + " blk " + etAddressBlk.getText().toString() + " " + etAddressUnit.getText().toString();
                 zipcode = Integer.parseInt(etZipcode.getText().toString());
                 category = items[spCategory.getSelectedItemPosition()];
 
@@ -136,14 +147,20 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
 
-                if(username.length() < 6 || username.length() > 20){
+                if(!isValidEmail(username)){
+                    //til.setErrorEnabled(true);
+                    etUsername.setError("Invalid email address.");
 
+                   // etUsername.getBackground().setColorFilter(getResources().getColor(R.color.color_primary), PorterDuff.Mode.SRC_ATOP);
+                    //Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+                    //til.startAnimation(shake);
+                    //til.setError("Please enter an email address");
                 }
                 else if(password.length() < 6 || password.length()>20){
-
+                    etPassword.setError("Invalid password.");
                 }
                 else if(!password.equals(confirmPassword)){
-
+                    etConfirmPassword.setError("Passwords do not match. Please enter again.");
                 }
                 else{
                     new RegisterTask().execute();
@@ -161,7 +178,6 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spn, items);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         spCategory.setAdapter(adapter);
-
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -199,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("username", username));
             params.add(new BasicNameValuePair("password", password));
+            params.add(new BasicNameValuePair("phone", phoneNumber));
             params.add(new BasicNameValuePair("address_string", addressString));
             params.add(new BasicNameValuePair("zipcode", String.valueOf(zipcode)));
             params.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
@@ -208,8 +225,8 @@ public class RegisterActivity extends AppCompatActivity {
             // getting JSON string from URL
             JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_REGISTER, "POST", params);
             Log.d(TAG, "with the username: " + username);
-            Log.d(TAG,"with the password: "+password);
-            Log.d(TAG,"json received is: "+json.toString());
+            Log.d(TAG, "with the password: " + password);
+            Log.d(TAG, "json received is: " + json.toString());
 
             try {
                 // Checking for SUCCESS TAG
@@ -240,6 +257,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 }

@@ -24,10 +24,9 @@
     </android.support.design.widget.AppBarLayout>
 
 
-<LinearLayout
-              android:orientation="vertical"
+<RelativeLayout
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:layout_marginTop="?attr/actionBarSize"
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
@@ -36,6 +35,16 @@
               tools:context="com.wheelchef.wheelchef.registerlogin.RegisterActivity"
               android:padding="10dp">
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <com.rey.material.widget.EditText
         android:id="@+id/etUsername"
         style = "@style/CustomEditText"
@@ -43,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:textSize="15sp"
-        android:hint="Enter your username"
+        android:hint="Email address"
         app:et_inputId="@+id/textfield_et_username_input"
         app:et_supportMode="charCounter"
         app:et_supportMaxChars="20"/>
@@ -58,7 +67,7 @@
         android:layout_marginBottom="10dp"
         android:inputType="textPassword"
         android:textSize="15sp"
-        android:hint="Enter your password"
+        android:hint="Password"
         app:et_inputId="@+id/textfield_et_password_input"
         app:et_supportMode="charCounter"
         app:et_supportMaxChars="20"/>
@@ -71,32 +80,91 @@
         android:layout_marginBottom="10dp"
         android:inputType="textPassword"
         android:textSize="15sp"
-        android:hint="Re-enter your password"
+        android:hint="Re-enter password"
         app:et_inputId="@+id/textfield_et_re_password_input"
         app:et_supportMode="charCounter"
         app:et_supportMaxChars="20"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="35dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="15dp"
+            android:text="+65"
+            android:textSize="15dp"
+            android:id="@+id/textView" />
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/etPhoneNumber"
+            style = "@style/CustomEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:textSize="15sp"
+            android:inputType="phone"
+            android:hint="Phone number"
+            app:et_inputId="@+id/textfield_et_address_input"
+            android:maxLength="8"/>
+    </LinearLayout>
     <com.rey.material.widget.EditText
-        android:id="@+id/etAddress"
+        android:id="@+id/etAddressRoad"
         style = "@style/CustomEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="textMultiLine"
         android:textSize="15sp"
-        android:hint="Enter your address"
+        android:hint="Road name"
         app:et_inputId="@+id/textfield_et_address_input"
         app:et_supportMode="none"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <com.rey.material.widget.EditText
+            android:id="@+id/etAddressBlk"
+            style = "@style/CustomEditText"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
+            android:inputType="textMultiLine"
+            android:textSize="15sp"
+            android:hint="Blk"
+            app:et_inputId="@+id/textfield_et_address_input"
+            android:gravity="left|center_vertical"
+            app:et_supportMode="none" />
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/etAddressUnit"
+            style = "@style/CustomEditText"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:inputType="textMultiLine"
+            android:textSize="15sp"
+            android:hint="Unit"
+            app:et_inputId="@+id/textfield_et_address_input"
+            app:et_supportMode="none"
+            android:gravity="center_vertical" />
+    </LinearLayout>
 
     <com.rey.material.widget.EditText
         android:id="@+id/etZipCode"
         style = "@style/CustomEditText"
-        android:layout_width="match_parent"
+        android:layout_width="167dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:inputType="number"
         android:textSize="15sp"
-        android:hint="Enter your postal code"
+        android:hint="Postal code"
         app:et_inputId="@+id/textfield_et_zipcode_input"
         app:et_supportMode="none"
         android:maxLength="6"/>
@@ -114,16 +182,22 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:gravity="left|center_vertical"
-            android:text="I'm in my home!"/>
+            android:text="I'm at home!"/>
 
-        <Spinner
-            android:id="@+id/spinner_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="128dp"
-            android:gravity="right|center_vertical"
-            android:prompt="@string/prompt_spinner_category"/>
     </LinearLayout>
+
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="128dp"
+        android:gravity="right|center_vertical"
+        android:prompt="@string/prompt_spinner_category"
+        android:layout_weight="1" />
+
+        </LinearLayout>
+    </ScrollView>
 
 
 
@@ -134,12 +208,13 @@
         android:text="Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
         app:rd_enable="true"
         app:rd_rippleType="wave"
         app:rd_delayClick="afterRelease"/>
 
-</LinearLayout>
+</RelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

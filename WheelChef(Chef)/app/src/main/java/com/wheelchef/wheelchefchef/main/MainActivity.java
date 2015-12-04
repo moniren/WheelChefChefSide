@@ -14,10 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.dish.CreateDishActivity;
 import com.wheelchef.wheelchefchef.registerlogin.LoginActivity;
 import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
@@ -184,6 +186,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    //listener for the createDish fab
+    public void createDish(View view) {
+        try{
+            Intent intent = new Intent(this, CreateDishActivity.class);
+            startActivity(intent);
+        }
+        catch (Exception e){
+            Toast toast = Toast.makeText(this,e.toString(),Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
 

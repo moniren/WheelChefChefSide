@@ -8,6 +8,7 @@
     <string name="payment_fragment">Payment</string>
     <string name="history_fragment">History</string>
     <string name="log_out">Log Out</string>
+    <string name="title_activity_create_dish">Create Dish</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_viewchefinfo">View Chef Info</string>

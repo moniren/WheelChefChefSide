@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick="startWriting"
+        android:onClick="createDish"
         android:background="@color/color_primary"
         app:borderWidth="0dp"
         app:fab_iconSrc="@drawable/ic_add_white_24dp" />

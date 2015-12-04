@@ -232,6 +232,8 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 Log.d(TAG, "login succeed!");
                 Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
+                //finish this activity once registered successfully
+                RegisterActivity.this.finish();
             } else {
                 Log.d(TAG,"login failed!");
                 Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();

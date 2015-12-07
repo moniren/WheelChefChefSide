@@ -58,7 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String[] items;
 
 
-    // url to get all products list
     private static final String TAG = "RegisterActivity";
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -95,6 +94,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setUpButtons() {
+        etZipcode.setOnFocusChangeListener(new EditTextFocusListener(etZipcode));
+        etUsername.setOnFocusChangeListener(new EditTextFocusListener(etUsername));
+        etPassword.setOnFocusChangeListener(new EditTextFocusListener(etPassword));
+        etConfirmPassword.setOnFocusChangeListener(new EditTextFocusListener(etConfirmPassword));
+
         bRegister.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
             @Override
@@ -104,7 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
                 confirmPassword = etConfirmPassword.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
                 addressString = etAddressRoad.getText().toString() + " blk " + etAddressBlk.getText().toString() + " " + etAddressUnit.getText().toString();
-                zipcode = Integer.parseInt(etZipcode.getText().toString());
+                if(etZipcode.getText().toString().length()!=0)
+                    zipcode = Integer.parseInt(etZipcode.getText().toString());
+                else
+                    etZipcode.setError("your zip code cannot be empty!");
+
                 category = items[spCategory.getSelectedItemPosition()];
 
                 if (cbInHome.isChecked()) {
@@ -149,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!isValidEmail(username)){
                     //til.setErrorEnabled(true);
-                    etUsername.setError("Invalid email address.");
+                    etUsername.setError("invalid email address.");
 
                    // etUsername.getBackground().setColorFilter(getResources().getColor(R.color.color_primary), PorterDuff.Mode.SRC_ATOP);
                     //Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -157,10 +165,10 @@ public class RegisterActivity extends AppCompatActivity {
                     //til.setError("Please enter an email address");
                 }
                 else if(password.length() < 6 || password.length()>20){
-                    etPassword.setError("Invalid password.");
+                    etPassword.setError("invalid password.");
                 }
                 else if(!password.equals(confirmPassword)){
-                    etConfirmPassword.setError("Passwords do not match. Please enter again.");
+                    etConfirmPassword.setError("passwords do not match. Please enter again.");
                 }
                 else{
                     new RegisterTask().execute();
@@ -266,6 +274,21 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    private class EditTextFocusListener implements View.OnFocusChangeListener{
+        private EditText wrapper;
+
+        EditTextFocusListener(EditText wrapper){
+            this.wrapper = wrapper;
+        }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(hasFocus){
+                wrapper.clearError();
+            }
+        }
     }
 
 }

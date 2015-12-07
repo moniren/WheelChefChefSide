@@ -24,19 +24,160 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:padding="10dp">
-        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add an image for your dish"
+                    android:layout_gravity="center"/>
+                <ImageView
+                    android:id="@+id/imageview_dish_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </FrameLayout>
+
+            <com.rey.material.widget.ImageButton
+                android:background="@color/color_accent"
+                android:id="@+id/btn_add_dish_photo"
+                style="@style/FlatWaveColorButtonRippleStyle"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_add_white_24dp"
+                app:rd_delayClick="afterRelease"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/etDishname"
+            style = "@style/CustomEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:hint="Dish Name"
+            app:et_inputId="@+id/textfield_et_dishname_input"
+            app:et_helper="Enter a name for your dish"
+            app:et_supportMode="helperWithError"
+            android:maxLength="20"/>
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/etDishDescription"
+            style = "@style/CustomEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:inputType="textMultiLine"
+            android:textSize="15sp"
+            android:hint="Description"
+            app:et_inputId="@+id/textfield_et_dishdescription_input"
+            app:et_supportMode="none"
+            android:maxLength="255"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/etDishPrice"
+                style = "@style/CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:inputType="numberDecimal"
+                android:hint="Dish price"
+                app:et_inputId="@+id/textfield_et_dishprice_input"
+                android:maxLength="8"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="/unit"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/etDishDiscount"
+                style = "@style/CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:inputType="numberDecimal"
+                android:hint="Dish discount"
+                app:et_inputId="@+id/textfield_et_dishdiscount_input"
+                android:maxLength="8"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="%"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner_dish_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minWidth="128dp"
+            android:gravity="right|center_vertical"
+            android:prompt="@string/prompt_spinner_category"
+            />
+        <com.rey.material.widget.Button
+            android:background="@color/color_accent"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:id="@+id/btn_create_dish"
+            android:text="Create"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"/>
 
 
     </LinearLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

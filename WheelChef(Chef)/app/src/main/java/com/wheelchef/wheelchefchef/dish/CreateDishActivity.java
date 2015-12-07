@@ -134,6 +134,7 @@ public class CreateDishActivity extends AppCompatActivity{
         {
             bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, dishPhotoUri);
             imageView.setImageBitmap(bitmap);
+            findViewById(R.id.textview_add_dish_photo).setVisibility(View.INVISIBLE);
         }
         catch (Exception e)
         {

@@ -24,25 +24,17 @@
     </android.support.design.widget.AppBarLayout>
 
 
-<RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="?attr/actionBarSize"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              tools:context="com.wheelchef.wheelchef.registerlogin.RegisterActivity"
-              android:padding="10dp">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+                android:layout_marginTop="?attr/actionBarSize"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
     <com.rey.material.widget.EditText
@@ -56,8 +48,9 @@
         android:textSize="15sp"
         android:hint="Email address"
         app:et_inputId="@+id/textfield_et_username_input"
-        app:et_supportMode="charCounter"
-        app:et_supportMaxChars="20"/>
+        app:et_helper="Enter your email address"
+        app:et_supportMode="helperWithError"
+        android:maxLength="20"/>
 
     <com.rey.material.widget.EditText
         android:id="@+id/etPassword"
@@ -69,8 +62,9 @@
         android:textSize="15sp"
         android:hint="Password"
         app:et_inputId="@+id/textfield_et_password_input"
-        app:et_supportMode="charCounter"
-        app:et_supportMaxChars="20"/>
+        app:et_helper="Enter password"
+        app:et_supportMode="helperWithError"
+        android:maxLength="20"/>
 
     <com.rey.material.widget.EditText
         android:id="@+id/etRePassword"
@@ -80,10 +74,11 @@
         android:layout_marginBottom="10dp"
         android:inputType="textPassword"
         android:textSize="15sp"
-        android:hint="Re-enter password"
+        android:hint="Password confirmation"
         app:et_inputId="@+id/textfield_et_re_password_input"
-        app:et_supportMode="charCounter"
-        app:et_supportMaxChars="20"/>
+        app:et_helper="Re-enter password"
+        app:et_supportMode="helperWithError"
+        android:maxLength="20"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -121,7 +116,8 @@
         android:textSize="15sp"
         android:hint="Road name"
         app:et_inputId="@+id/textfield_et_address_input"
-        app:et_supportMode="none"/>
+        app:et_supportMode="none"
+        android:maxLength="255"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -166,7 +162,8 @@
         android:textSize="15sp"
         android:hint="Postal code"
         app:et_inputId="@+id/textfield_et_zipcode_input"
-        app:et_supportMode="none"
+        app:et_helper="Enter zip code"
+        app:et_supportMode="helperWithError"
         android:maxLength="6"/>
 
     <LinearLayout
@@ -183,38 +180,35 @@
             android:layout_marginRight="20dp"
             android:gravity="left|center_vertical"
             android:text="I'm at home!"/>
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="128dp"
+            android:gravity="right|center_vertical"
+            android:prompt="@string/prompt_spinner_category"
+            />
 
     </LinearLayout>
 
 
-    <Spinner
-        android:id="@+id/spinner_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minWidth="128dp"
-        android:gravity="right|center_vertical"
-        android:prompt="@string/prompt_spinner_category"
-        android:layout_weight="1" />
+
+            <com.rey.material.widget.Button
+                android:background="@color/color_accent"
+                style="@style/FlatWaveColorButtonRippleStyle"
+                android:id="@+id/bRegister"
+                android:text="Register"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:rd_enable="true"
+                app:rd_rippleType="wave"
+                app:rd_delayClick="afterRelease"/>
 
         </LinearLayout>
     </ScrollView>
-
-
-
-    <com.rey.material.widget.Button
-        android:background="@color/color_accent"
-        style="@style/FlatWaveColorButtonRippleStyle"
-        android:id="@+id/bRegister"
-        android:text="Register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        app:rd_enable="true"
-        app:rd_rippleType="wave"
-        app:rd_delayClick="afterRelease"/>
-
-</RelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

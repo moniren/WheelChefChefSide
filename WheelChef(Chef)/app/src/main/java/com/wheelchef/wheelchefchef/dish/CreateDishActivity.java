@@ -1,5 +1,6 @@
 package com.wheelchef.wheelchefchef.dish;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,15 +13,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.utils.MD5Generator;
 
+import java.net.URI;
+
 /**
  * Created by lyk on 12/4/2015.
  */
 public class CreateDishActivity extends AppCompatActivity{
+
+
+    private Uri dishPhotoUri;
 
     protected static final int ACTION_TAKE_PHOTO = 111;
     protected static final int ACTION_CHOOSE_PHOTO = 222;
@@ -51,8 +58,9 @@ public class CreateDishActivity extends AppCompatActivity{
         switch(requestCode) {
             case ACTION_TAKE_PHOTO:
                 if(resultCode == RESULT_OK){
-                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
-                    dishPhoto.setImageBitmap(photo);
+//                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+//                    dishPhoto.setImageBitmap(photo);
+                    this.grabImage(dishPhoto);
                     Log.d(TAG,"Successfully got the photo!");
                 }
                 break;
@@ -115,5 +123,31 @@ public class CreateDishActivity extends AppCompatActivity{
 
             }
         });
+    }
+
+    private void grabImage(ImageView imageView)
+    {
+        this.getContentResolver().notifyChange(dishPhotoUri, null);
+        ContentResolver cr = this.getContentResolver();
+        Bitmap bitmap;
+        try
+        {
+            bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, dishPhotoUri);
+            imageView.setImageBitmap(bitmap);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Failed to load", e);
+        }
+    }
+
+
+    public Uri getDishPhotoUri() {
+        return dishPhotoUri;
+    }
+
+    public void setDishPhotoUri(Uri dishPhotoUri) {
+        this.dishPhotoUri = dishPhotoUri;
     }
 }

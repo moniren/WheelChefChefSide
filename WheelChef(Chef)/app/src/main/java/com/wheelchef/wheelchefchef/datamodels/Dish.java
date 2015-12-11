@@ -12,10 +12,11 @@ public class Dish {
     private int timesOrdered;
     private float discount;
     private String category;
+    private String filePath;
 
 
     public Dish(String dishId, String dishName, String chefName, String description, float price, int timesOrdered, float discount,
-                String category){
+                String category, String filePath){
         this.dishId = dishId;
         this.dishName = dishName;
         this.chefName = chefName;
@@ -24,6 +25,7 @@ public class Dish {
         this.timesOrdered = timesOrdered;
         this.discount = discount;
         this.category = category;
+        this.filePath = filePath;
     }
 
     public String getCategory() {
@@ -48,6 +50,10 @@ public class Dish {
 
     public String getDishName() {
         return dishName;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     public float getPrice() {
@@ -88,5 +94,9 @@ public class Dish {
 
     public void setTimesOrdered(int timesOrdered) {
         this.timesOrdered = timesOrdered;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

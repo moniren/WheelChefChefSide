@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layout_home_swipe"
+        android:layout_centerHorizontal="true">
     <ListView
         android:id="@+id/notes_list"
         android:layout_width="wrap_content"
@@ -13,6 +18,7 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0dp"/>
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
     <com.rey.material.widget.FloatingActionButton
         android:id="@+id/homeFabButton"
         style="@style/FloatingWaveColorActionButton"

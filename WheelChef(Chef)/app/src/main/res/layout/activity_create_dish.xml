@@ -59,7 +59,8 @@
                     android:id="@+id/imageview_dish_photo"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"/>
             </FrameLayout>
 
             <com.rey.material.widget.ImageButton

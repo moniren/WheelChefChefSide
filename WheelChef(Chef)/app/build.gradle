@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-repositories { maven { url "https://oss.sonatype.org/content/repositories/snapshots" } }
+repositories { maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
+    maven { url "https://jitpack.io"} }
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -37,4 +38,6 @@ dependencies {
     compile ('com.gordonwong:material-sheet-fab:1.2') {
         exclude group: 'com.nineoldandroids'
     }
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.4'
 }

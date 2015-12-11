@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,15 +20,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.loopj.android.http.RequestParams;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
-import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
-import com.wheelchef.wheelchefchef.utils.MD5Generator;
+import com.wheelchef.wheelchefchef.utils.HashGenerator;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
 import org.apache.http.NameValuePair;
@@ -37,7 +38,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +110,7 @@ public class CreateDishActivity extends AppCompatActivity{
                     Uri  photo = imageReturnedIntent.getData();
                     try {
                         dishPhotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photo);
+                        findViewById(R.id.textview_add_dish_photo).setVisibility(View.INVISIBLE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -134,7 +135,7 @@ public class CreateDishActivity extends AppCompatActivity{
 
     private String generateDishId(String dishName){
         currentTime = System.currentTimeMillis();
-        return MD5Generator.getMD5hash(dishName+currentTime);
+        return HashGenerator.getSHA256hash(dishName + currentTime);
     }
 
     private  void setUpButtons(){
@@ -156,6 +157,8 @@ public class CreateDishActivity extends AppCompatActivity{
                 dishDiscount = Float.parseFloat(etDishDiscount.getText().toString());
                 dishCategory = items[spCategory.getSelectedItemPosition()];
                 dishId = generateDishId(dishName);
+
+                new CreateDishTask().execute();
             }
         });
 
@@ -214,7 +217,7 @@ public class CreateDishActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(CreateDishActivity.this);
-            pDialog.setMessage("Creating account...");
+            pDialog.setMessage("Creating dish...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -233,20 +236,13 @@ public class CreateDishActivity extends AppCompatActivity{
             params.add(new BasicNameValuePair("discount", String.valueOf(dishDiscount)));
             params.add(new BasicNameValuePair("category", dishCategory));
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            // Must compress the Image to reduce image size to make upload easy
-            dishPhotoBitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
-            byte[] byte_arr = stream.toByteArray();
-            // Encode Image to String
-            String encodedString = Base64.encodeToString(byte_arr, 0);
-            params.add(new BasicNameValuePair("data", encodedString));
 
-            String filePath = ConnectionParams.URL_WEBSITE+ConnectionParams.CHEF_FOLDER+username+"/"+dishId+".png";
+            String filePath = username+"/dishes/"+dishId+".png";
             params.add(new BasicNameValuePair("photo", filePath));
 
 
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_REGISTER, "POST", params);
+            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_CREATE_DISH, "POST", params);
             Log.d(TAG, "with the dishId: " + dishId);
             Log.d(TAG, "with the dishName: " + dishName);
             Log.d(TAG, "json received is: " + json.toString());
@@ -271,7 +267,8 @@ public class CreateDishActivity extends AppCompatActivity{
                 Log.d(TAG, "Create dish succeed!");
                 Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
                 //finish this activity once registered successfully
-                CreateDishActivity.this.finish();
+                new UploadImageTask().execute();
+
             } else {
                 Log.d(TAG,"Create dish failed!");
                 Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
@@ -280,6 +277,143 @@ public class CreateDishActivity extends AppCompatActivity{
 
 
     }
+
+    private class UploadImageTask extends AsyncTask<String, String, String> {
+
+        RequestParams picParams = new RequestParams();
+        int success = 0;
+        String msg = "";
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(CreateDishActivity.this);
+            pDialog.setMessage("Uploading dish image...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        /**
+         * getting All products from url
+         * */
+        protected String doInBackground(String... args) {
+            picParams.put("chefname", username);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            // Must compress the Image to reduce image size to make upload easy
+            dishPhotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+
+            byte[] byteArr1 = stream.toByteArray();
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap middleBitmap = BitmapFactory.decodeByteArray(byteArr1,0,byteArr1.length,options);
+
+            Bitmap finalBitmap = Bitmap.createScaledBitmap(middleBitmap, middleBitmap.getWidth()/4, middleBitmap.getHeight()/4, false);
+
+
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            byte[] byteArr2 = stream.toByteArray();
+
+            // Encode Image to String
+            String encodedString = Base64.encodeToString(byteArr2, 0);
+            picParams.put("data", encodedString);
+
+            String filePath = username+"/dishes/"+dishId+".png";
+            picParams.put("photo", filePath);
+
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("chefname", username));
+            params.add(new BasicNameValuePair("photo", filePath));
+            params.add(new BasicNameValuePair("data", encodedString));
+
+            Log.d(TAG, "with the chefname: " + username);
+            Log.d(TAG, "with the photo: " + filePath);
+            // getting JSON string from URL
+            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_UPLOAD_DISH_IMAGE, "POST", params);
+            Log.d(TAG, "json received is: " + json.toString());
+
+            try {
+                // Checking for SUCCESS TAG
+                success = json.getInt(ConnectionParams.TAG_SUCCESS);
+                msg = json.getString(ConnectionParams.TAG_MSG);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            /*AsyncHttpClient client = new AsyncHttpClient();
+            // Don't forget to change the IP address to your LAN address. Port no as well.
+            client.post(ConnectionParams.URL_CHEF_UPLOAD_DISH_IMAGE,
+                    picParams, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            // Hide Progress Dialog
+                            pDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Status: "+statusCode+" Header: "+headers.toString()
+                                    +" Response: "+responseBody.toString(),
+                                    Toast.LENGTH_LONG).show();
+
+                            Log.d(TAG,"Status: "+statusCode+" Header: "+headers.toString()
+                                    +" Response: "+responseBody.toString());
+
+                            CreateDishActivity.this.finish();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            // Hide Progress Dialog
+                            pDialog.dismiss();
+                            // When Http response code is '404'
+                            if (statusCode == 404) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Requested resource not found",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                            // When Http response code is '500'
+                            else if (statusCode == 500) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Something went wrong at server end",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                            // When Http response code other than 404, 500
+                            else {
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : "
+                                                + statusCode, Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        }
+                    });*/
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            if (success == 1) {
+                Log.d(TAG, "Upload dish image succeed!");
+                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+                //finish this activity once registered successfully
+                CreateDishActivity.this.finish();
+
+            } else {
+                Log.d(TAG,"Upload dish image failed!");
+                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+    }
+
+
+
 
 
     public Uri getDishPhotoUri() {

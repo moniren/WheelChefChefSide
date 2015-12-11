@@ -20,22 +20,28 @@
             android:layout_height="match_parent" />
 
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:id="@+id/appBarLayout_main"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/color_primary"
-                app:elevation="@dimen/default_elevation"
+                app:elevation="0dp"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/shadow_toolbar_drops"
+                android:layout_marginTop="?attr/actionBarSize"/>
 
 
             </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+        <!--</android.support.design.widget.AppBarLayout>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

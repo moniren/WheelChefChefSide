@@ -76,7 +76,7 @@ public class AddDishPhotoDialog extends Dialog {
     private File createTemporaryFile(String part, String ext) throws Exception
     {
         File tempDir= Environment.getExternalStorageDirectory();
-        tempDir=new File(tempDir.getAbsolutePath()+"/.temp/");
+        tempDir=new File(tempDir.getAbsolutePath()+"/DCIM");
         if(!tempDir.exists())
         {
             tempDir.mkdir();

@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+                boolean valid = true;
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
                 confirmPassword = etConfirmPassword.getText().toString();
@@ -110,8 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
                 addressString = etAddressRoad.getText().toString() + " blk " + etAddressBlk.getText().toString() + " " + etAddressUnit.getText().toString();
                 if(etZipcode.getText().toString().length()!=0)
                     zipcode = Integer.parseInt(etZipcode.getText().toString());
-                else
+                else{
                     etZipcode.setError("your zip code cannot be empty!");
+                    valid = false;
+                }
+
 
                 category = items[spCategory.getSelectedItemPosition()];
 
@@ -171,17 +175,22 @@ public class RegisterActivity extends AppCompatActivity {
                     etConfirmPassword.setError("passwords do not match. Please enter again.");
                 }
                 else{
-                    new RegisterTask().execute();
+                    if(valid)
+                        new RegisterTask().execute();
                 }
             }
         });
     }
 
     private void setUpSpinner(){
-        items = new String[3];
-        items[0] = "Chinese";
-        items[1] = "Indian";
-        items[2] = "Indonesian";
+        items = new String[7];
+        items[0] = "Indian";
+        items[1] = "Chinese";
+        items[2] = "Malaysian";
+        items[3] = "Indonesian";
+        items[4] = "Vietnamese";
+        items[5] = "Western";
+        items[6] = "Other";
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spn, items);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);

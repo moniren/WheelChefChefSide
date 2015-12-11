@@ -87,7 +87,7 @@
             android:textSize="15sp"
             android:hint="Dish Name"
             app:et_inputId="@+id/textfield_et_dishname_input"
-            app:et_helper="Enter a name for your dish"
+            app:et_helper="Enter a dish name"
             app:et_supportMode="helperWithError"
             android:maxLength="20"/>
 
@@ -101,8 +101,9 @@
             android:textSize="15sp"
             android:hint="Description"
             app:et_inputId="@+id/textfield_et_dishdescription_input"
-            app:et_supportMode="none"
-            android:maxLength="255"/>
+            app:et_helper="Enter a dish description"
+            app:et_supportMode="helperWithError"
+            android:maxLength="255" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,6 +119,8 @@
                 android:textSize="15sp"
                 android:inputType="numberDecimal"
                 android:hint="Dish price"
+                app:et_helper="Enter price"
+                app:et_supportMode="helperWithError"
                 app:et_inputId="@+id/textfield_et_dishprice_input"
                 android:maxLength="8"
                 android:layout_gravity="center_vertical"/>
@@ -146,25 +149,37 @@
                 android:hint="Dish discount"
                 app:et_inputId="@+id/textfield_et_dishdiscount_input"
                 android:maxLength="8"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                app:et_helper="Enter discount"
+                app:et_supportMode="helperWithError"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="%"
+                android:text=" %"
                 android:layout_gravity="bottom"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Cuisine: " />
         <Spinner
             android:id="@+id/spinner_dish_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:minWidth="128dp"
-            android:gravity="right|center_vertical"
+            android:gravity="left|center_vertical"
             android:prompt="@string/prompt_spinner_category"
             />
+        </LinearLayout>
         <com.rey.material.widget.Button
             android:background="@color/color_accent"
             style="@style/FlatWaveColorButtonRippleStyle"
@@ -178,6 +193,7 @@
             app:rd_enable="true"
             app:rd_rippleType="wave"
             app:rd_delayClick="afterRelease"/>
+
 
 
     </LinearLayout>

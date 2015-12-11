@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -24,6 +25,7 @@ import com.loopj.android.http.RequestParams;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
+import com.rey.material.widget.TextView;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
@@ -40,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by lyk on 12/4/2015.
@@ -139,6 +142,10 @@ public class CreateDishActivity extends AppCompatActivity{
     }
 
     private  void setUpButtons(){
+        etDishName.setOnFocusChangeListener(new EditTextFocusListener(etDishName));
+        etDishDesc.setOnFocusChangeListener(new EditTextFocusListener(etDishDesc));
+        etDishPrice.setOnFocusChangeListener(new EditTextFocusListener(etDishPrice));
+        etDishDiscount.setOnFocusChangeListener(new EditTextFocusListener(etDishDiscount));
         btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,15 +157,49 @@ public class CreateDishActivity extends AppCompatActivity{
         btnCreateDish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean valid = true;
                 username = PrefUtil.getStringPreference(SessionManager.USERNAME, CreateDishActivity.this);
                 dishName = etDishName.getText().toString();
                 dishDesc = etDishDesc.getText().toString();
-                dishPrice = Float.parseFloat(etDishPrice.getText().toString());
-                dishDiscount = Float.parseFloat(etDishDiscount.getText().toString());
+
                 dishCategory = items[spCategory.getSelectedItemPosition()];
                 dishId = generateDishId(dishName);
 
-                new CreateDishTask().execute();
+                if(etDishDiscount.getText().toString().length()==0)
+                    dishDiscount = 0;
+                else if (!(0<=Float.parseFloat(etDishDiscount.getText().toString())||(Float.parseFloat(etDishDiscount.getText().toString())<=100))){
+
+                    etDishDiscount.setError("enter dish discount between 0-100");
+                    valid = false;
+                }
+                else{
+                    dishDiscount = Float.parseFloat(etDishDiscount.getText().toString());
+
+                }
+
+                if(findViewById(R.id.textview_add_dish_photo).getVisibility()!= View.INVISIBLE){
+                    ((android.widget.TextView)findViewById(R.id.textview_add_dish_photo)).setText("Please upload an image");
+                    ((android.widget.TextView)findViewById(R.id.textview_add_dish_photo)).setTextColor(CreateDishActivity.this.getResources().getColor(android.R.color.holo_red_light));
+                }
+                else if(dishName.length()==0) {
+                    etDishName.setError("cannot be empty!");
+
+                }
+                else if(dishDesc.length()==0) {
+                    etDishDesc.setError("cannot be empty!");
+
+                }
+                else if(etDishPrice.getText().toString().length()==0){
+                    etDishPrice.setError("cannot be empty!");
+
+                }
+                else{
+                    dishPrice = Float.parseFloat(etDishPrice.getText().toString());
+                    if (valid)
+                        new CreateDishTask().execute();
+                }
+
+
             }
         });
 
@@ -167,10 +208,14 @@ public class CreateDishActivity extends AppCompatActivity{
 
 
     private void setUpSpinner(){
-        items = new String[3];
-        items[0] = "Chinese";
-        items[1] = "Indian";
-        items[2] = "Indonesian";
+        items = new String[7];
+        items[0] = "Indian";
+        items[1] = "Chinese";
+        items[2] = "Malaysian";
+        items[3] = "Indonesian";
+        items[4] = "Vietnamese";
+        items[5] = "Western";
+        items[6] = "Other";
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spn, items);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
@@ -412,6 +457,21 @@ public class CreateDishActivity extends AppCompatActivity{
 
     }
 
+
+    private class EditTextFocusListener implements View.OnFocusChangeListener{
+        private EditText wrapper;
+
+        EditTextFocusListener(EditText wrapper){
+            this.wrapper = wrapper;
+        }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(hasFocus){
+                wrapper.clearError();
+            }
+        }
+    }
 
 
 

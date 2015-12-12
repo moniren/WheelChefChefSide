@@ -3,7 +3,7 @@ package com.wheelchef.wheelchefchef.datamodels;
 /**
  * Created by lyk on 12/7/2015.
  */
-public class Dish {
+public class DishModel {
     private String dishId;
     private String dishName;
     private String chefName;
@@ -15,8 +15,8 @@ public class Dish {
     private String filePath;
 
 
-    public Dish(String dishId, String dishName, String chefName, String description, float price, int timesOrdered, float discount,
-                String category, String filePath){
+    public DishModel(String dishId, String dishName, String chefName, String description, float price, int timesOrdered, float discount,
+                     String category, String filePath){
         this.dishId = dishId;
         this.dishName = dishName;
         this.chefName = chefName;

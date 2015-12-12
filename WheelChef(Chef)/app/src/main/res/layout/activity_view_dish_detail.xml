@@ -41,6 +41,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/textview_dish_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,6 +51,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="0dp"/>
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/textview_dish_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="0dp"/>
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/textview_dish_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +71,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="0dp"/>
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/textview_dish_discount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,6 +81,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="0dp"/>
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/textview_dish_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

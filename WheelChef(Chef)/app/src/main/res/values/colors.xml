@@ -6,4 +6,5 @@
     <color name="color_accent">#FFAB00</color>
     <color name="single_line_line">#CDC5BA</color>
     <color name="window_dark">#303030</color>
+    <color name="color_green">#4CAF50</color>
 </resources>

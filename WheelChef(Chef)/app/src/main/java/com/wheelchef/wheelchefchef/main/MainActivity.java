@@ -80,8 +80,9 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment();
         orderFragment = new OrderFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentholder_main, homeFragment);
+        fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
         fragmentTransaction.commit();
+        getSupportActionBar().setTitle(getResources().getString(R.string.home_fragment));
         //loadSelection(0);
     }
 
@@ -153,11 +154,13 @@ public class MainActivity extends AppCompatActivity
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentholder_main, homeFragment);
                     fragmentTransaction.commit();
+                    getSupportActionBar().setTitle(getResources().getString(R.string.home_fragment));
                     return true;
                 case R.id.order_item:
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
                     fragmentTransaction.commit();
+                    getSupportActionBar().setTitle(getResources().getString(R.string.current_order_fragment));
                     return true;
                 case R.id.payment_item:
                     return true;

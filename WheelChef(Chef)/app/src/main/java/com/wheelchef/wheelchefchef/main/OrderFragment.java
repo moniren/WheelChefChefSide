@@ -23,6 +23,8 @@ public class OrderFragment extends android.support.v4.app.Fragment {
 
     private ListView listView;
     private Button btnViewDetail;
+    private static OrderModel m1 = null;
+    private static OrderModel m2 = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,13 +41,32 @@ public class OrderFragment extends android.support.v4.app.Fragment {
 
         ArrayList<OrderModel> dataList = new ArrayList<>();
 
+        ArrayList<String> dishList1 = new ArrayList<>();
+        ArrayList<String> dishList2 = new ArrayList<>();
+
+        ArrayList<Integer> amountList1 = new ArrayList<>();
+        ArrayList<Integer> amountList2 = new ArrayList<>();
 
 
-        OrderModel m1 = new OrderModel(1,"mhq6634","blk 258 #7-12-222 Jurong West 91","BUNJYH4858","3.3","safd666","2015.12.11 12:15pm",
-                PrefUtil.getStringPreference(SessionManager.USERNAME,this.getActivity()));
+        dishList1.add("Gong Bao Ji Ding");
+        dishList1.add("Shui Zhu Niu Rou");
+        amountList1.add(5);
+        amountList1.add(1);
 
-        OrderModel m2 = new OrderModel(1,"lyk","blk 555 #7-5-222 Jurong West 91","aasd45455f","5.5","asdfas888","2015.12.11 12:25pm",
-                PrefUtil.getStringPreference(SessionManager.USERNAME,this.getActivity()));
+        dishList2.add("Prata");
+        dishList2.add("Curry Chicken");
+        amountList2.add(10);
+        amountList2.add(3);
+
+
+        if(m1==null) {
+            m1 = new OrderModel(amountList1, "mhq6634", "blk 258 #7-12-222 Jurong West 91", dishList1, "19.8", "safd666", "2015.12.11 12:15pm",
+                    PrefUtil.getStringPreference(SessionManager.USERNAME, this.getActivity()), "");
+        }
+        if(m2==null){
+            m2 = new OrderModel(amountList2,"lyk","blk 555 #7-5-222 Jurong West 91",dishList2,"42.9","asdfas888","2015.12.11 12:25pm",
+                    PrefUtil.getStringPreference(SessionManager.USERNAME,this.getActivity()),"");
+        }
 
         dataList.add(m1);
         dataList.add(m2);
@@ -54,6 +75,13 @@ public class OrderFragment extends android.support.v4.app.Fragment {
 
         listView.setAdapter(adapter);
         return forReturn;
+    }
+
+    public static void changeStatus(String userId, String status){
+        if(m1.getCutomerName().equals(userId))
+            m1.setAcceptanceStatus(status);
+        else if(m2.getCutomerName().equals(userId))
+            m2.setAcceptanceStatus(status);
     }
 
 

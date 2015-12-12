@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:id="@+id/row_order_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_primary"
+    android:background="@color/color_accent"
     android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/order_list_user_photo"
             android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:layout_height="80dp"
+            android:scaleType="fitStart"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/order_list_user_photo">
             <TextView
                 android:id="@+id/order_list_orderPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="5,000"
                 android:textSize="20dp"/>
             <TextView
                 android:id="@+id/order_list_orderTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp"/>
+                android:textSize="10dp"/>
         </LinearLayout>
 
         <com.rey.material.widget.ImageButton
@@ -34,9 +38,10 @@
             style="@style/FlatWaveColorButtonRippleStyle"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_gravity="center_vertical|right"
+            android:layout_alignParentRight = "true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_arrow_forward_white_48dp"
-            app:rd_delayClick="afterRelease"
-            android:gravity="center_vertical"/>
+            app:rd_delayClick="afterRelease"/>
 
-</LinearLayout>
+</RelativeLayout>

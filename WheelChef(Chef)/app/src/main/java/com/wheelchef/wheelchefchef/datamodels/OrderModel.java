@@ -1,19 +1,31 @@
 package com.wheelchef.wheelchefchef.datamodels;
 
+import android.content.Intent;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by MHUIQ on 12/12/2015.
  */
-public class OrderModel {
+public class OrderModel implements Serializable{
+
+    public static final String ACCEPTANCE_ACCEPTED = "accepted";
+    public static final String ACCEPTANCE_REJECTED = "rejected";
+
     private String orderId;
-    private String dishId;
-    private int amount;
+    private ArrayList<String> dishId;
+    private ArrayList<Integer> amount;
     private String orderTime;
     private String customerName;
     private String recipientName;
     private String deliveryAddress;
     private String foodPrice;
+    private String acceptanceStatus;
 
-    public OrderModel(int amount, String customerName, String deliveryAddress, String dishId, String foodPrice, String orderId, String orderTime, String recipientName) {
+    public OrderModel(ArrayList<Integer> amount, String customerName, String deliveryAddress,
+                      ArrayList<String> dishId, String foodPrice, String orderId, String orderTime, String recipientName,
+                      String acceptanceStatus) {
         this.amount = amount;
         this.customerName = customerName;
         this.deliveryAddress = deliveryAddress;
@@ -22,9 +34,10 @@ public class OrderModel {
         this.orderId = orderId;
         this.orderTime = orderTime;
         this.recipientName = recipientName;
+        this.acceptanceStatus = acceptanceStatus;
     }
 
-    public int getAmount() {
+    public ArrayList<Integer> getAmount() {
         return amount;
     }
 
@@ -36,7 +49,7 @@ public class OrderModel {
         return deliveryAddress;
     }
 
-    public String getDishId() {
+    public ArrayList<String> getDishId() {
         return dishId;
     }
 
@@ -56,7 +69,11 @@ public class OrderModel {
         return recipientName;
     }
 
-    public void setAmount(int amount) {
+    public String getAcceptanceStatus() {
+        return acceptanceStatus;
+    }
+
+    public void setAmount(ArrayList<Integer> amount) {
         this.amount = amount;
     }
 
@@ -68,7 +85,7 @@ public class OrderModel {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public void setDishId(String dishId) {
+    public void setDishId(ArrayList<String> dishId) {
         this.dishId = dishId;
     }
 
@@ -86,5 +103,9 @@ public class OrderModel {
 
     public void setRecipientName(String recipientName) {
         this.recipientName = recipientName;
+    }
+
+    public void setAcceptanceStatus(String acceptanceStatus) {
+        this.acceptanceStatus = acceptanceStatus;
     }
 }

@@ -5,13 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_view_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:elevation="@dimen/default_elevation"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_gravity="center_horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,30 +39,29 @@
             android:text="Order ID: "
             android:textSize="25dp"/>
         <TextView
-            android:id="@+id/view_order_detail_orderID"
+            android:id="@+id/view_order_detail_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"/>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/view_order_detail_orderTime"
+        android:id="@+id/view_order_detail_order_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="25dp"/>
+        android:textSize="15dp"/>
 
     <ListView
-        android:id="@+id/view_order_detail_dishList"
+        android:id="@+id/dish_list"
         android:layout_width="wrap_content"
         android:layout_height="239dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="2.0dp"
-        android:layout_weight="0.23" />
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -57,7 +76,7 @@
             android:text="Total: S$ "
             android:textSize="20dp"/>
         <TextView
-            android:id="@+id/view_order_detail_totalPrice"
+            android:id="@+id/view_order_detail_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"/>
@@ -72,41 +91,54 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Customer: "
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
         <TextView
-            android:id="@+id/view_order_detail_customerName"
+            android:id="@+id/view_order_detail_customer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 
-    <com.rey.material.widget.Button
-        android:background="@color/color_green"
-        style="@style/FlatWaveColorButtonRippleStyle"
-        android:id="@+id/btn_accept_order"
-        android:text="Accept"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="2dp"
-        app:rd_enable="true"
-        app:rd_rippleType="wave"
-        app:rd_delayClick="afterRelease"/>
-    <com.rey.material.widget.Button
-        android:background="@color/color_primary"
-        style="@style/FlatWaveColorButtonRippleStyle"
-        android:id="@+id/btn_reject_order"
-        android:text="Reject"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="10dp"
-        app:rd_enable="true"
-        app:rd_rippleType="wave"
-        app:rd_delayClick="afterRelease"/>
-
-
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_accept_order"
+            android:background="@color/color_green"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:text="Accept"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="2dp"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"/>
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_reject_order"
+            android:background="@color/color_primary"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:text="Reject"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"/>
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_order_progress"
+            android:background="@color/color_green"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:text="Go to Order Progress"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:visibility = "invisible"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -35,6 +35,14 @@
             android:name=".dish.CreateDishActivity"
             android:label="@string/title_activity_create_dish" >
         </activity>
+        <activity
+            android:name=".order.ViewOrderDetailActivity"
+            android:label="@string/title_activity_view_order_detail" >
+        </activity>
+        <activity
+            android:name=".order.OrderProgressActivity"
+            android:label="@string/title_activity_order_progress" >
+        </activity>
 
     </application>
 

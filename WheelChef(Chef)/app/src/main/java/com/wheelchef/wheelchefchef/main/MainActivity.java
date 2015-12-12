@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MSG = "message";
     private HomeFragment homeFragment;
+    private OrderFragment orderFragment;
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
@@ -69,20 +70,15 @@ public class MainActivity extends AppCompatActivity
             new VerifyTask(username, password).execute();
         }
 
-
         setContentView(R.layout.activity_main);
         setUpToolbar();
-
 
         fragmentManager = getSupportFragmentManager();
 
         setUpDrawer();
 
-
-
-
-
         homeFragment = new HomeFragment();
+        orderFragment = new OrderFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentholder_main, homeFragment);
         fragmentTransaction.commit();
@@ -104,8 +100,6 @@ public class MainActivity extends AppCompatActivity
         setUpNavigationView();
         setUpAccountInfo();
     }
-
-
 
     private void setUpToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -161,6 +155,9 @@ public class MainActivity extends AppCompatActivity
                     fragmentTransaction.commit();
                     return true;
                 case R.id.order_item:
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.payment_item:
                     return true;

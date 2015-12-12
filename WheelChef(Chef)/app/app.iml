@@ -112,11 +112,10 @@
     <orderEntry type="library" exported="" name="httpclient-4.3.6" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="material-1.2.1.6-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="kxml-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="kobjects-j2me-0.0-SNAPSHOT-20040926-2" level="project" />
+    <orderEntry type="library" exported="" name="kxml-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.9" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>
 </module>

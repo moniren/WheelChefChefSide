@@ -4,6 +4,7 @@ package com.wheelchef.wheelchefchef.dish;
  * Created by lyk on 12/12/2015.
  */
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,16 +56,16 @@ public class DishCursorAdapter extends CursorAdapter {
     }
 
     private class EditOnClickListener implements View.OnClickListener {
-        private int id;
-        private String title;
-        EditOnClickListener(int id, String title){
-            this.id = id;
-            this.title = title;
+        private String dishId;
+        EditOnClickListener(String dishId){
+            this.dishId = dishId;
         }
 
         @Override
         public void onClick(View v) {
-//            homeActivity.startEditing(id,title);
+            Intent intent = new Intent(mainActivity,ViewDishDetailActivity.class);
+            intent.putExtra(ViewDishDetailActivity.DISH_ID,dishId);
+            mainActivity.startActivity(intent);
         }
     }
 
@@ -78,6 +79,8 @@ public class DishCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder  =   (ViewHolder)    view.getTag();
         String dishName = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_DISH_NAME));
+
+        String dishId = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_DISH_ID));
 
 
         String photoString = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_PHOTO));
@@ -95,7 +98,7 @@ public class DishCursorAdapter extends CursorAdapter {
 
 
         //deleteOnClickListener = new DeleteOnClickListener(id);
-        //editOnClickListener = new EditOnClickListener(id, dishName);
+        editOnClickListener = new EditOnClickListener(dishId);
 
 
         holder.deleteBtn.setOnClickListener(deleteOnClickListener);

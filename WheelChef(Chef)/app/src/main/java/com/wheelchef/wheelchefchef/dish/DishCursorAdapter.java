@@ -4,6 +4,7 @@ package com.wheelchef.wheelchefchef.dish;
  * Created by lyk on 12/12/2015.
  */
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.main.HomeFragment;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesTable;
+import com.wheelchef.wheelchefchef.utils.BitmapUtil;
 
 /**
  * Created by John on 2015/8/19.
@@ -54,16 +56,16 @@ public class DishCursorAdapter extends CursorAdapter {
     }
 
     private class EditOnClickListener implements View.OnClickListener {
-        private int id;
-        private String title;
-        EditOnClickListener(int id, String title){
-            this.id = id;
-            this.title = title;
+        private String dishId;
+        EditOnClickListener(String dishId){
+            this.dishId = dishId;
         }
 
         @Override
         public void onClick(View v) {
-//            homeActivity.startEditing(id,title);
+            Intent intent = new Intent(mainActivity,ViewDishDetailActivity.class);
+            intent.putExtra(ViewDishDetailActivity.DISH_ID,dishId);
+            mainActivity.startActivity(intent);
         }
     }
 
@@ -78,13 +80,17 @@ public class DishCursorAdapter extends CursorAdapter {
         ViewHolder holder  =   (ViewHolder)    view.getTag();
         String dishName = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_DISH_NAME));
 
+        String dishId = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_DISH_ID));
+
 
         String photoString = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_PHOTO));
 
         byte[] photoAsBytes = Base64.decode(photoString, Base64.DEFAULT);
 
+        Bitmap photo = BitmapFactory.decodeByteArray(photoAsBytes, 0, photoAsBytes.length);
 
-        holder.ivDishPhoto.setImageBitmap(BitmapFactory.decodeByteArray(photoAsBytes,0,photoAsBytes.length));
+        photo = BitmapUtil.getResizedBitmap(photo,photo.getWidth()/2,photo.getHeight()/2);
+        holder.ivDishPhoto.setImageBitmap(photo);
 
 
         //int id = cursor.getInt(cursor.getColumnIndex(MainTable.COLUMN_ID));
@@ -92,7 +98,7 @@ public class DishCursorAdapter extends CursorAdapter {
 
 
         //deleteOnClickListener = new DeleteOnClickListener(id);
-        //editOnClickListener = new EditOnClickListener(id, dishName);
+        editOnClickListener = new EditOnClickListener(dishId);
 
 
         holder.deleteBtn.setOnClickListener(deleteOnClickListener);

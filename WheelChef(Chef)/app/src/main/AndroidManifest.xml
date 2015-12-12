@@ -45,6 +45,10 @@
             android:name=".order.OrderProgressActivity"
             android:label="@string/title_activity_order_progress" >
         </activity>
+        <activity
+            android:name=".dish.ViewDishDetailActivity"
+            android:label="@string/title_activity_view_dish_detail" >
+        </activity>
 
     </application>
 

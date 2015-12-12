@@ -65,6 +65,16 @@ public class DishesDataSource {
 //        return color;
 //    }
 
+    public static synchronized Cursor getCursorFromDishId(String dishId){
+        String where = "\"" + DishesTable.COLUMN_DISH_ID + "\" = '" + dishId+"'";
+
+        Cursor cursor = DataAccessWrapper.queryDB(database,
+                DishesTable.TABLE_DISHES, allColumns, where, null, null, null,
+                null);
+
+        return cursor;
+    }
+
     public static synchronized int getRowIdFromDishId(String dishId){
         String where = "\"" + DishesTable.COLUMN_DISH_ID + "\" = '" + dishId+"'";
 

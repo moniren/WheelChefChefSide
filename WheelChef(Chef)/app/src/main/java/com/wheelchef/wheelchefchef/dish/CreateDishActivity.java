@@ -28,6 +28,7 @@ import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.TextView;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
+import com.wheelchef.wheelchefchef.utils.BitmapUtil;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
 import com.wheelchef.wheelchefchef.utils.HashGenerator;
@@ -349,22 +350,32 @@ public class CreateDishActivity extends AppCompatActivity{
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             // Must compress the Image to reduce image size to make upload easy
+            dishPhotoBitmap = BitmapUtil.getResizedBitmap(dishPhotoBitmap,dishPhotoBitmap.getWidth()/5,dishPhotoBitmap.getHeight()/5);
+
             dishPhotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
 
             byte[] byteArr1 = stream.toByteArray();
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            Bitmap middleBitmap = BitmapFactory.decodeByteArray(byteArr1,0,byteArr1.length,options);
+            /*BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            Bitmap middleBitmap = BitmapFactory.decodeByteArray(byteArr1, 0, byteArr1.length, options);
 
-            Bitmap finalBitmap = Bitmap.createScaledBitmap(middleBitmap, middleBitmap.getWidth()/4, middleBitmap.getHeight()/4, false);
+            //if(options.outHeight > options.outWidth)
+                //options.inSampleSize = BitmapUtil.calculateInSampleSize(options, 720, 1280);
+            //else
+                //options.inSampleSize = BitmapUtil.calculateInSampleSize(options, 1280, 720);
+            options.inSampleSize = 4;
+            options.inJustDecodeBounds = false;
+            middleBitmap = BitmapFactory.decodeByteArray(byteArr1, 0, byteArr1.length, options);
 
+            //Bitmap finalBitmap = BitmapUtil.getResizedBitmap(middleBitmap,middleBitmap.getWidth()/10,middleBitmap.getHeight()/10);
+                    //Bitmap.createScaledBitmap(middleBitmap, middleBitmap.getWidth()/10, middleBitmap.getHeight()/10, false);
+            //finalBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
 
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-            byte[] byteArr2 = stream.toByteArray();
+            byte[] byteArr2 = stream.toByteArray();*/
 
             // Encode Image to String
-            String encodedString = Base64.encodeToString(byteArr2, 0);
+            String encodedString = Base64.encodeToString(byteArr1, 0);
             picParams.put("data", encodedString);
 
             String filePath = username+"/dishes/"+dishId+".png";

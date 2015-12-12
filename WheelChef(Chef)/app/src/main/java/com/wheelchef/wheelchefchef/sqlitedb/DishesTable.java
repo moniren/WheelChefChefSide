@@ -9,7 +9,7 @@ public class DishesTable {
     // Database table, the columns are created in the same order
     public static final String TABLE_DISHES = "Dishes";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_DiSH_ID = "DishId";
+    public static final String COLUMN_DISH_ID = "DishId";
     public static final String COLUMN_DISH_NAME = "DishName";
     public static final String COLUMN_CHEF_NAME = "ChefName";
     public static final String COLUMN_DESCRIPTION = "Description";
@@ -22,7 +22,7 @@ public class DishesTable {
 
     // Database creation SQL statement
     private static final String TABLE_COLUMNS = " ("+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-            + COLUMN_DiSH_ID + " TEXT, "
+            + COLUMN_DISH_ID + " TEXT, "
             + COLUMN_DISH_NAME + " TEXT, " + COLUMN_CHEF_NAME
             + " TEXT, " + COLUMN_DESCRIPTION + " TEXT, "+ COLUMN_PRICE + " TEXT, "
             + COLUMN_TIMES_ORDERED + " TEXT, "

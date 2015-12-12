@@ -1,11 +1,13 @@
 package com.wheelchef.wheelchefchef.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.main.MainActivity;
 
 /**
  * Created by MHUIQ on 12/12/2015.
@@ -28,5 +30,11 @@ public class OrderProgressActivity extends AppCompatActivity {
         setUpToolbar();
 
         setUpData();*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

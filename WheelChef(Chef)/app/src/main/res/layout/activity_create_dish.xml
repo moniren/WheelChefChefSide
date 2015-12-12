@@ -177,8 +177,7 @@
             android:layout_marginBottom="20dp"
             android:minWidth="128dp"
             android:gravity="left|center_vertical"
-            android:prompt="@string/prompt_spinner_category"
-            />
+            android:prompt="@string/prompt_spinner_category" />
         </LinearLayout>
         <com.rey.material.widget.Button
             android:background="@color/color_accent"

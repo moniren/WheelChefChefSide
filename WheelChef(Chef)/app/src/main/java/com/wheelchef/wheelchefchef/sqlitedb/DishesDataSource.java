@@ -24,17 +24,18 @@ public class DishesDataSource {
     private DishesDataSource() {
     }
 
-    private static final String[] allColumns = {DishesTable.COLUMN_ID,DishesTable.COLUMN_DiSH_ID, DishesTable.COLUMN_DISH_NAME,
+    private static final String[] allColumns = {DishesTable.COLUMN_ID,DishesTable.COLUMN_DISH_ID, DishesTable.COLUMN_DISH_NAME,
             DishesTable.COLUMN_CHEF_NAME, DishesTable.COLUMN_DESCRIPTION, DishesTable.COLUMN_PRICE, DishesTable.COLUMN_TIMES_ORDERED,
-            DishesTable.COLUMN_DISCOUNT, DishesTable.COLUMN_CATEGORY, DishesTable.COLUMN_PHOTO};
+            DishesTable.COLUMN_DISCOUNT, DishesTable.COLUMN_CATEGORY, DishesTable.COLUMN_FILE_PATH, DishesTable.COLUMN_PHOTO};
 
     public static synchronized void createDishesTable() {
         DishesTable.create(DishesDataSource.database);
     }
 
-    public static synchronized  Cursor getWholeCursor(){
+    public static synchronized  Cursor getWholeCursor(String chefName){
+        String where = "\"" + DishesTable.COLUMN_CHEF_NAME + "\" = '" + chefName+"'";
         return DataAccessWrapper.queryDB(database,
-                DishesTable.TABLE_DISHES, allColumns, null, null, null,
+                DishesTable.TABLE_DISHES, allColumns, where, null, null,
                 null, ORDER_BY_DISH_NAME);
     }
 
@@ -64,13 +65,46 @@ public class DishesDataSource {
 //        return color;
 //    }
 
+    public static synchronized int getRowIdFromDishId(String dishId){
+        String where = "\"" + DishesTable.COLUMN_DISH_ID + "\" = '" + dishId+"'";
+
+        int rowId = -1;
+        Cursor cursor = DataAccessWrapper.queryDB(database,
+                DishesTable.TABLE_DISHES, allColumns, where, null, null, null,
+                null);
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                rowId = cursor.getInt(cursor.getColumnIndex(DishesTable.COLUMN_ID));
+            }
+        }
+        return rowId;
+    }
+
+
+    public static synchronized String getDishNameFromDishId(String dishId){
+        String where = "\"" + DishesTable.COLUMN_DISH_ID + "\" = '" + dishId+"'";
+
+       String dishName = null;
+        Cursor cursor = DataAccessWrapper.queryDB(database,
+                DishesTable.TABLE_DISHES, allColumns, where, null, null, null,
+                null);
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                dishName = cursor.getString(cursor.getColumnIndex(DishesTable.COLUMN_DISH_NAME));
+            }
+        }
+        return dishName;
+    }
+
     public static synchronized void updateDish(Context ctx, long rowId,
                                                ContentValues values) {
         DataAccessWrapper.update(database, ctx, DishesTable.TABLE_DISHES, rowId,
                 values);
     }
 
-    public static synchronized long instertDish(Context ctx,
+    public static synchronized long insertDish(Context ctx,
                                                ContentValues values) {
         return DataAccessWrapper.insert(database, ctx, DishesTable.TABLE_DISHES,
                 DishesTable.COLUMN_ID, values);

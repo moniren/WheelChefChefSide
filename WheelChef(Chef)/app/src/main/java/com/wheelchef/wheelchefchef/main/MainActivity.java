@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
 //        implements AdapterView.OnItemClickListener
 {
 
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
     //private ListView navList;
     //private DrawerLayout drawerLayout;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         if(intent.getBooleanExtra(LoginActivity.NEEDVERIFY,false)){
             String username = PrefUtil.getStringPreference(SessionManager.USERNAME, this);
             String password = PrefUtil.getStringPreference(SessionManager.PASSWORD,this);
-            new VerifyTask(username,password).execute();
+            new VerifyTask(username, password).execute();
         }
 
         setContentView(R.layout.activity_main);

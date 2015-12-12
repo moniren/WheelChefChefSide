@@ -13,7 +13,7 @@ import com.wheelchef.wheelchefchef.R;
 public class OrderProgressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_order_detail);
+        setContentView(R.layout.activity_order_progress);
 
       /*  tvOrderID = (TextView) findViewById(R.id.view_order_detail_order_id);
         tvOrderTime = (TextView) findViewById(R.id.view_order_detail_order_time);

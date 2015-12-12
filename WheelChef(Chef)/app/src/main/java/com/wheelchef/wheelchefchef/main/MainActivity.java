@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity
                 mLeftDrawerLayout.toggle();
             }
         });
+        toolbar.setTitle("TEST TITLE");
     }
 
     private void setUpDrawer(){
@@ -161,10 +162,6 @@ public class MainActivity extends AppCompatActivity
                     fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
                     fragmentTransaction.commit();
                     getSupportActionBar().setTitle(getResources().getString(R.string.current_order_fragment));
-                    return true;
-                case R.id.payment_item:
-                    return true;
-                case R.id.history_item:
                     return true;
                 case R.id.logout_item:
                     SessionManager.logout(MainActivity.this);

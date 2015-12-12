@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">WheelChef(Chef)</string>
-
+    <string name="app_name">WheelChef - chef</string>
 
     <string name="home_fragment">My Menu</string>
     <string name="my_account_fragment">My Account</string>

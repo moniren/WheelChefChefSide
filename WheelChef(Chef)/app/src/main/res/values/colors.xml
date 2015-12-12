@@ -8,4 +8,6 @@
     <color name="window_dark">#303030</color>
     <color name="color_green">#009688</color>
     <color name="background">#F5F5F5</color>
+    <color name="grey">#757575</color>
+    <color name="dark_grey">#212121</color>
 </resources>

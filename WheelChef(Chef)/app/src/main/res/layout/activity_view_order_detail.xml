@@ -33,12 +33,14 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <TextView
+            style="@style/CustomTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Order ID: "
             android:textSize="25dp"/>
         <TextView
+            style="@style/CustomTextColor"
             android:id="@+id/view_order_detail_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +48,7 @@
     </LinearLayout>
 
     <TextView
+        style="@style/CustomTextColor"
         android:id="@+id/view_order_detail_order_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,11 +58,8 @@
     <ListView
         android:id="@+id/dish_list"
         android:layout_width="wrap_content"
-        android:layout_height="239dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"/>
 
@@ -70,12 +70,14 @@
         android:layout_gravity="right"
         android:layout_marginRight="40dp">
         <TextView
+            style="@style/CustomTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Total: S$ "
             android:textSize="20dp"/>
         <TextView
+            style="@style/CustomTextColor"
             android:id="@+id/view_order_detail_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,14 +87,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
         <TextView
+            style="@style/CustomTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Customer: "
             android:textSize="15dp"/>
         <TextView
+            style="@style/CustomTextColor"
             android:id="@+id/view_order_detail_customer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +125,6 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp"
             app:rd_enable="true"
             app:rd_rippleType="wave"
@@ -133,7 +137,6 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp"
             android:visibility = "invisible"
             app:rd_enable="true"

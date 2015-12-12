@@ -14,17 +14,17 @@
             android:icon="@drawable/ic_book_black_24dp"
             android:title="@string/current_order_fragment" />
 
-        <item
+        <!--<item
             android:id="@+id/payment_item"
             android:checked="false"
             android:icon="@drawable/ic_payment_black_24dp"
-            android:title="@string/payment_fragment" />
+            android:title="@string/payment_fragment" />-->
 
-        <item
+       <!-- <item
             android:id="@+id/history_item"
             android:checked="false"
             android:icon="@drawable/ic_history_black_24dp"
-            android:title="@string/history_fragment" />
+            android:title="@string/history_fragment" />-->
 
 
         <item

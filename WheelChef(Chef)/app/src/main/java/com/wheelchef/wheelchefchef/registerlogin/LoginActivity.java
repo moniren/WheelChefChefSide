@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         bLogin.setOnClickListener(this);
         bRegisterLink.setOnClickListener(this);
+        setUpToolbar();
     }
 
     @Override
@@ -138,6 +140,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
+    }
+    private void setUpToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
+        setSupportActionBar(toolbar);
+        String title = getResources().getString(R.string.title_activity_login);
+        toolbar.setTitle(title);
     }
 
 

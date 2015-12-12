@@ -68,14 +68,12 @@ public class ViewOrderDetailActivity extends AppCompatActivity {
 
     private void setUpButtons() {
         if(orderModel.getAcceptanceStatus().equals(OrderModel.ACCEPTANCE_ACCEPTED)) {
-            bAccept.setVisibility(Button.INVISIBLE);
-            bReject.setVisibility(Button.INVISIBLE);
+            bAccept.setVisibility(Button.GONE);
+            bReject.setVisibility(Button.GONE);
             bProgress.setVisibility(Button.VISIBLE);
         }else if(orderModel.getAcceptanceStatus().equals(OrderModel.ACCEPTANCE_REJECTED)){
-            Button buttonAccept = (Button)findViewById(R.id.btn_accept_order);
-            buttonAccept.setVisibility(Button.INVISIBLE);
-            Button buttonReject = (Button)findViewById(R.id.btn_reject_order);
-            buttonReject.setVisibility(Button.INVISIBLE);
+            bAccept.setVisibility(Button.GONE);
+            bReject.setVisibility(Button.GONE);
         }
         bAccept.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
@@ -84,6 +82,7 @@ public class ViewOrderDetailActivity extends AppCompatActivity {
                 OrderFragment.changeStatus(orderModel.getCutomerName(), OrderModel.ACCEPTANCE_ACCEPTED);
                 Intent intent = new Intent(ViewOrderDetailActivity.this, OrderProgressActivity.class);
                 startActivity(intent);
+                ViewOrderDetailActivity.this.finish();
             }
         });
 
@@ -94,6 +93,15 @@ public class ViewOrderDetailActivity extends AppCompatActivity {
                 OrderFragment.changeStatus(orderModel.getCutomerName(), OrderModel.ACCEPTANCE_REJECTED);
                 ViewOrderDetailActivity.this.startActivity(new Intent(ViewOrderDetailActivity.this, MainActivity.class));
                 ViewOrderDetailActivity.this.finish();
+            }
+        });
+
+        bProgress.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewOrderDetailActivity.this, OrderProgressActivity.class);
+                startActivity(intent);
             }
         });
     }

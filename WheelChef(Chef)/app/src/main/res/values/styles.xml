@@ -5,6 +5,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
+
         <!--<item name="windowActionBar">false</item>-->
         <!--<item name="windowNoTitle">true</item>-->
         <!--<item name="android:actionBarStyle"   tools:ignore="NewApi">@style/MyActionBar</item>-->
@@ -68,6 +69,9 @@
         <item name="rd_delayClick">afterRelease</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">@color/abc_primary_text_material_dark</item>
+    </style>
+    <style name="CustomTextColor">
+        <item name="android:textColor">@color/dark_grey</item>
     </style>
 
 </resources>

@@ -20,6 +20,7 @@ import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.main.HomeFragment;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesTable;
+import com.wheelchef.wheelchefchef.utils.BitmapUtil;
 
 /**
  * Created by John on 2015/8/19.
@@ -83,8 +84,10 @@ public class DishCursorAdapter extends CursorAdapter {
 
         byte[] photoAsBytes = Base64.decode(photoString, Base64.DEFAULT);
 
+        Bitmap photo = BitmapFactory.decodeByteArray(photoAsBytes, 0, photoAsBytes.length);
 
-        holder.ivDishPhoto.setImageBitmap(BitmapFactory.decodeByteArray(photoAsBytes,0,photoAsBytes.length));
+        photo = BitmapUtil.getResizedBitmap(photo,photo.getWidth()/2,photo.getHeight()/2);
+        holder.ivDishPhoto.setImageBitmap(photo);
 
 
         //int id = cursor.getInt(cursor.getColumnIndex(MainTable.COLUMN_ID));

@@ -80,26 +80,33 @@
             android:textSize="25dp"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
     <com.rey.material.widget.Button
         android:background="@color/color_green"
         style="@style/FlatWaveColorButtonRippleStyle"
-        android:id="@+id/btn_create_dish"
+        android:id="@+id/btn_accept_order"
         android:text="Accept"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="2dp"
+        app:rd_enable="true"
+        app:rd_rippleType="wave"
+        app:rd_delayClick="afterRelease"/>
+    <com.rey.material.widget.Button
+        android:background="@color/color_primary"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:id="@+id/btn_reject_order"
+        android:text="Reject"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
         app:rd_enable="true"
         app:rd_rippleType="wave"
         app:rd_delayClick="afterRelease"/>
-        
 
-
-    </LinearLayout>
 
 
 </LinearLayout>

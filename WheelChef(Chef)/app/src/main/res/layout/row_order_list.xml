@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_primary"
+    android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/order_list_user_photo"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/order_list_orderPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/order_list_orderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"/>
+        </LinearLayout>
+
+        <com.rey.material.widget.ImageButton
+            android:id="@+id/btn_view_order_detail"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_arrow_forward_white_48dp"
+            app:rd_delayClick="afterRelease"
+            android:gravity="center_vertical"/>
+
+</LinearLayout>

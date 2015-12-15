@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow_toolbar_drops"
+        android:layout_alignParentTop="true"/>
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

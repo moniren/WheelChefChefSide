@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.datamodels.DishModel;
 import com.wheelchef.wheelchefchef.dish.DishCursorAdapter;
-import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
+import com.wheelchef.wheelchefchef.account.SessionManager;
 import com.wheelchef.wheelchefchef.sqlitedb.DatabaseHelper;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesDataSource;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesTable;
@@ -38,7 +38,7 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 /**
  * Created by lyk on 11/20/2015.
  */
-public class HomeFragment extends Fragment {
+public class MenuFragment extends Fragment {
 
     private WaveSwipeRefreshLayout waveSwipeRefreshLayout;
     private ListView listView;
@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                 values.put(DishesTable.COLUMN_CATEGORY,tempRemote.getCategory());
                 values.put(DishesTable.COLUMN_FILE_PATH,tempRemote.getFilePath());
 
-                DishesDataSource.insertDish(HomeFragment.this.getActivity(), values);
+                DishesDataSource.insertDish(MenuFragment.this.getActivity(), values);
                 downloadDishImage(tempRemote.getDishId(), tempRemote.getFilePath());
             }
         } else{
@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
                         values.put(DishesTable.COLUMN_CATEGORY,tempRemote.getCategory());
                         values.put(DishesTable.COLUMN_FILE_PATH,tempRemote.getFilePath());
 
-                        DishesDataSource.insertDish(HomeFragment.this.getActivity(), values);
+                        DishesDataSource.insertDish(MenuFragment.this.getActivity(), values);
 
                         //Todo: async task add image
                         downloadDishImage(tempRemote.getDishId(),tempRemote.getFilePath());
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
                         values.put(DishesTable.COLUMN_CATEGORY,tempRemote.getCategory());
                         values.put(DishesTable.COLUMN_FILE_PATH,tempRemote.getFilePath());
 
-                        DishesDataSource.updateDish(HomeFragment.this.getActivity(),rowId,values);
+                        DishesDataSource.updateDish(MenuFragment.this.getActivity(),rowId,values);
 
                         if(needChangePhoto){
                             //Todo: async task add image
@@ -210,7 +210,7 @@ public class HomeFragment extends Fragment {
 
                 values.put(DishesTable.COLUMN_PHOTO,photo);
 
-                DishesDataSource.updateDish(HomeFragment.this.getActivity(),rowId,values);
+                DishesDataSource.updateDish(MenuFragment.this.getActivity(),rowId,values);
 
             } else {
                 Log.d(TAG,"getting image form server : "+json.getString(ConnectionParams.TAG_MSG));
@@ -234,11 +234,6 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            pDialog = new ProgressDialog(HomeFragment.this.getActivity());
-//            pDialog.setMessage("Loading products. Please wait...");
-//            pDialog.setIndeterminate(false);
-//            pDialog.setCancelable(false);
-//            pDialog.show();
         }
 
         /**
@@ -249,7 +244,7 @@ public class HomeFragment extends Fragment {
             String msg = "";
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            username = PrefUtil.getStringPreference(SessionManager.USERNAME, HomeFragment.this.getActivity());
+            username = PrefUtil.getStringPreference(SessionManager.USERNAME, MenuFragment.this.getActivity());
             params.add(new BasicNameValuePair("chefname", username));
             // getting JSON string from URL
             JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_LOAD_DISH, "POST", params);
@@ -304,7 +299,7 @@ public class HomeFragment extends Fragment {
             }
 
             cursor = DishesDataSource.getWholeCursor(username);
-            dataAdapter = new DishCursorAdapter(HomeFragment.this.getActivity(),cursor,0,HomeFragment.this);
+            dataAdapter = new DishCursorAdapter(MenuFragment.this.getActivity(),cursor,0,MenuFragment.this);
 
             return null;
         }
@@ -317,21 +312,6 @@ public class HomeFragment extends Fragment {
 //            pDialog.dismiss();
             listView.setAdapter(dataAdapter);
             waveSwipeRefreshLayout.setRefreshing(false);
-            // updating UI from Background Thread
-//            HomeFragment.this.getActivity().runOnUiThread(new Runnable() {
-//                public void run() {
-//                    /**
-//                     * Updating parsed JSON data into ListView
-//                     * */
-//                    ListAdapter adapter = new SimpleAdapter(
-//                            HomeFragment.this.getActivity(), dishList,
-//                            R.layout.list_item, new String[]{TAG_PID,
-//                            TAG_NAME},
-//                            new int[]{R.id.pid, R.id.name});
-//                    // updating listview
-//                    listView.setAdapter(adapter);
-//                }
-//            });
 
         }
 
@@ -358,9 +338,9 @@ public class HomeFragment extends Fragment {
          * getting All products from url
          * */
         protected String doInBackground(String... args) {
-            username = PrefUtil.getStringPreference(SessionManager.USERNAME, HomeFragment.this.getActivity());
+            username = PrefUtil.getStringPreference(SessionManager.USERNAME, MenuFragment.this.getActivity());
             cursor = DishesDataSource.getWholeCursor(username);
-            dataAdapter = new DishCursorAdapter(HomeFragment.this.getActivity(),cursor,0,HomeFragment.this);
+            dataAdapter = new DishCursorAdapter(MenuFragment.this.getActivity(),cursor,0,MenuFragment.this);
 
             return null;
         }

@@ -4,18 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.datamodels.OrderModel;
 import com.wheelchef.wheelchefchef.order.OrderListAdapter;
-import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
+import com.wheelchef.wheelchefchef.account.SessionManager;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class OrderFragment extends android.support.v4.app.Fragment {

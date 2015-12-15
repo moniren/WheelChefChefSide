@@ -17,7 +17,6 @@ import com.wheelchef.wheelchefchef.datamodels.OrderModel;
 import com.wheelchef.wheelchefchef.dish.DishListAdapter;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.main.OrderFragment;
-import com.wheelchef.wheelchefchef.registerlogin.LoginActivity;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
 
 import java.util.ArrayList;

@@ -2,7 +2,10 @@ package com.wheelchef.wheelchefchef.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.widget.ImageView;
 
 /**
  * Created by lyk on 12/12/2015.
@@ -46,5 +49,20 @@ public class BitmapUtil {
                 bm, 0, 0, width, height, matrix, false);
         bm.recycle();
         return resizedBitmap;
+    }
+
+    public static void  setLocked(ImageView v)
+    {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);  //0 means grayscale
+        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+        v.setColorFilter(cf);
+        v.setAlpha(128);   // 128 = 0.5
+    }
+
+    public static void  setUnlocked(ImageView v)
+    {
+        v.setColorFilter(null);
+        v.setAlpha(255);
     }
 }

@@ -1,9 +1,7 @@
 package com.wheelchef.wheelchefchef.main;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -22,8 +20,8 @@ import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.dish.CreateDishActivity;
-import com.wheelchef.wheelchefchef.registerlogin.LoginActivity;
-import com.wheelchef.wheelchefchef.registerlogin.SessionManager;
+import com.wheelchef.wheelchefchef.account.LoginActivity;
+import com.wheelchef.wheelchefchef.account.SessionManager;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
@@ -55,8 +53,11 @@ public class MainActivity extends AppCompatActivity
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MSG = "message";
-    private HomeFragment homeFragment;
+    private MenuFragment menuFragment;
     private OrderFragment orderFragment;
+
+    private Toolbar toolbar;
+    private TextView toolbarTitle;
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
@@ -77,12 +78,12 @@ public class MainActivity extends AppCompatActivity
 
         setUpDrawer();
 
-        homeFragment = new HomeFragment();
+        menuFragment = new MenuFragment();
         orderFragment = new OrderFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
         fragmentTransaction.commit();
-        getSupportActionBar().setTitle(getResources().getString(R.string.home_fragment));
+        toolbarTitle.setText(getResources().getString(R.string.current_order_fragment));
         //loadSelection(0);
     }
 
@@ -99,11 +100,12 @@ public class MainActivity extends AppCompatActivity
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         setUpNavigationView();
-        setUpAccountInfo();
+//        setUpAccountInfo();
     }
 
     private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbarTitle = (TextView) findViewById(R.id.custom_toolbar_title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -112,7 +114,6 @@ public class MainActivity extends AppCompatActivity
                 mLeftDrawerLayout.toggle();
             }
         });
-        toolbar.setTitle("TEST TITLE");
     }
 
     private void setUpDrawer(){
@@ -127,11 +128,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void setUpAccountInfo(){
-        usernameText = mMenuFragment.getUsernameText();
-        String username = PrefUtil.getStringPreference(SessionManager.USERNAME,this);
-        usernameText.setText(username);
-    }
+//    private void setUpAccountInfo(){
+//        usernameText = mMenuFragment.getUsernameText();
+//        String username = PrefUtil.getStringPreference(SessionManager.USERNAME,this);
+//        usernameText.setText(username);
+//    }
 
     private void setUpNavigationView(){
         navigationView = mMenuFragment.getNavigationView();
@@ -153,15 +154,15 @@ public class MainActivity extends AppCompatActivity
 
                 case R.id.home_item:
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentholder_main, homeFragment);
+                    fragmentTransaction.replace(R.id.fragmentholder_main, menuFragment);
                     fragmentTransaction.commit();
-                    getSupportActionBar().setTitle(getResources().getString(R.string.home_fragment));
+                    toolbarTitle.setText(getResources().getString(R.string.home_fragment));
                     return true;
                 case R.id.order_item:
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
                     fragmentTransaction.commit();
-                    getSupportActionBar().setTitle(getResources().getString(R.string.current_order_fragment));
+                    toolbarTitle.setText(getResources().getString(R.string.current_order_fragment));
                     return true;
                 case R.id.logout_item:
                     SessionManager.logout(MainActivity.this);

@@ -74,4 +74,9 @@
         <item name="android:textColor">@color/dark_grey</item>
     </style>
 
+    <style name="CustomSwitch" parent="Material.Widget.Switch">
+        <item name="sw_trackColor">@drawable/color_track</item>
+        <item name="sw_thumbColor">@drawable/color_thumb</item>
+    </style>
+
 </resources>

@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
-import com.wheelchef.wheelchefchef.main.HomeFragment;
+import com.wheelchef.wheelchefchef.main.MenuFragment;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesTable;
 import com.wheelchef.wheelchefchef.utils.BitmapUtil;
@@ -29,7 +29,7 @@ import com.wheelchef.wheelchefchef.utils.BitmapUtil;
 public class DishCursorAdapter extends CursorAdapter {
     private LayoutInflater inflater;
 
-    private HomeFragment homeFragment;
+    private MenuFragment menuFragment;
     private MainActivity mainActivity;
 
     private DeleteOnClickListener deleteOnClickListener;
@@ -69,10 +69,10 @@ public class DishCursorAdapter extends CursorAdapter {
         }
     }
 
-    public DishCursorAdapter(Context context, Cursor c, int flags, HomeFragment homeFragment) {
+    public DishCursorAdapter(Context context, Cursor c, int flags, MenuFragment menuFragment) {
         super(context,c, flags);
         this.mainActivity = (MainActivity) context;
-        this.homeFragment = homeFragment;
+        this.menuFragment = menuFragment;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override

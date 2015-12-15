@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.wheelchef.wheelchefchef.main.OrderFragment">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow_toolbar_drops"
+        android:layout_alignParentTop="true"/>
 
     <ListView
         android:id="@+id/order_list"

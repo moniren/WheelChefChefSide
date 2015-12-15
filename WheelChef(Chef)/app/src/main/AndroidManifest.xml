@@ -10,7 +10,7 @@
 
     <application android:allowBackup="true"
                  android:label="@string/app_name"
-                 android:icon="@mipmap/ic_launcher"
+                 android:icon="@mipmap/chef_hat"
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme"
                  android:hardwareAccelerated="true"
@@ -20,7 +20,7 @@
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".registerlogin.LoginActivity"
+            android:name=".account.LoginActivity"
             android:excludeFromRecents="true"
             android:noHistory="true">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registerlogin.RegisterActivity"
+            android:name=".account.RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
@@ -48,6 +48,9 @@
         <activity
             android:name=".dish.ViewDishDetailActivity"
             android:label="@string/title_activity_view_dish_detail" >
+        </activity>
+        <activity android:name=".account.EditAccountActivity"
+            android:label="@string/title_activity_edit_account">
         </activity>
 
     </application>

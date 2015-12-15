@@ -3,9 +3,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@drawable/header_bg_1"
                 android:orientation="vertical"
     >
+    <ImageView
+        android:id="@+id/imageview_header_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/header_bg_1"
+        android:scaleType="fitXY"/>
     <com.pkmmte.view.CircularImageView
         android:layout_gravity="center_horizontal"
         android:id = "@+id/profile_image"
@@ -26,14 +31,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="lol"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:textColor="#FFF"
         android:textStyle="bold"
         android:gravity="left"
-        android:paddingBottom="4dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/username_text_header"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/profile_image"
-        android:layout_alignStart="@+id/profile_image" />
+        android:layout_alignStart="@id/profile_image" />
+
+
+
+    <com.rey.material.widget.Switch
+        style="@style/CustomSwitch"
+        android:id="@+id/switch_availability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:checked="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lol"
+        android:textSize="10sp"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/textview_availability"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/switch_availability" />
 
 </RelativeLayout>

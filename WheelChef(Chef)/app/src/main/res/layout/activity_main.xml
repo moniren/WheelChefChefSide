@@ -33,6 +33,15 @@
                 app:elevation="0dp"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+                <TextView
+                    android:id="@+id/custom_toolbar_title"
+                    android:textSize="20dp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
@@ -54,6 +63,7 @@
         android:layout_gravity="start"
         android:clipChildren="false"
         >
+
 
         <com.mxn.soul.flowingdrawer_core.FlowingView
             android:background="@android:color/transparent"

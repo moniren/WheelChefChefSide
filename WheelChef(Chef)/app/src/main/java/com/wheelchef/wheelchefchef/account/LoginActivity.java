@@ -1,4 +1,4 @@
-package com.wheelchef.wheelchefchef.registerlogin;
+package com.wheelchef.wheelchefchef.account;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

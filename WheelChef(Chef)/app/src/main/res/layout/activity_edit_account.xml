@@ -24,13 +24,135 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+                <ImageView
+                    android:id="@+id/imageview_profile_photo"
+                    android:layout_width="60dp"
+                    android:layout_height="80dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/unknown_person"
+                    android:layout_centerVertical="true"/>
+                <com.rey.material.widget.ImageButton
+                    android:background="@color/color_accent"
+                    android:id="@+id/btn_add_profile_photo"
+                    style="@style/FlatWaveColorButtonRippleStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_create_white_36dp"
+                    app:rd_delayClick="afterRelease"/>
+            </RelativeLayout>
 
-    </LinearLayout>
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/single_line_line"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    style="@style/CustomTextColor"
+                    android:id="@+id/textview_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/single_line_line"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+                <!-- TODO move the string to strings.xml -->
+                <TextView
+                    style="@style/CustomTextColor"
+                    android:id="@+id/textview_change_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="change your password"
+                    android:layout_centerVertical="true"/>
+                <com.rey.material.widget.ImageButton
+                    android:background="@color/color_accent"
+                    android:id="@+id/btn_change_password"
+                    style="@style/FlatWaveColorButtonRippleStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_create_white_36dp"
+                    app:rd_delayClick="afterRelease"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/single_line_line"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+                <!-- TODO move the string to strings.xml -->
+                <TextView
+                    style="@style/CustomTextColor"
+                    android:id="@+id/textview_chef_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="change your description"
+                    android:layout_centerVertical="true"/>
+                <com.rey.material.widget.ImageButton
+                    android:background="@color/color_accent"
+                    android:id="@+id/btn_change_description"
+                    style="@style/FlatWaveColorButtonRippleStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_create_white_36dp"
+                    app:rd_delayClick="afterRelease"/>
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

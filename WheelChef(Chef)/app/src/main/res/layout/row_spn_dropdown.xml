@@ -2,7 +2,7 @@
 <com.rey.material.widget.TextView xmlns:android="http://schemas.android.com/apk/res/android"
                                   xmlns:app="http://schemas.android.com/apk/res-auto"
                                   android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                  android:textColor="@color/dark_grey"
+                                  android:textColor="@android:color/white"
                                   android:id="@+id/row_spn_tv"
                                   android:layout_width="match_parent"
                                   android:layout_height="48dp"

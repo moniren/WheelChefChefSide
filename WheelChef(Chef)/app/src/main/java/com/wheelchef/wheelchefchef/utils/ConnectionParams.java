@@ -6,7 +6,7 @@ package com.wheelchef.wheelchefchef.utils;
 public abstract class ConnectionParams {
     //school: 10.27.53.225  http://10.27.53.225/wheelchef/
     //room: 192.168.1.22  http://www.wheelchef.com/
-    public static final String URL_WEBSITE = "http://192.168.1.22/wheelchef/";
+    public static final String URL_WEBSITE = "http://10.27.53.225/wheelchef/";
     public static final String CHEF_FOLDER = "chef/";
     public static final String URL_CHEF_LOGIN = URL_WEBSITE+"db_chef_login.php";
     public static final String URL_CHEF_REGISTER = URL_WEBSITE+"db_chef_register.php";

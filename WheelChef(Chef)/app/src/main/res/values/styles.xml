@@ -36,12 +36,13 @@
         <item name="android:textColorHint">#000000</item>
         <item name="et_dividerColor">@drawable/color_divider</item>
         <item name="et_labelTextColor">@drawable/color_label</item>
+        <item name="et_supportTextColor">@color/dark_grey</item>
         <item name="et_supportTextErrorColor">#FFFF0000</item>
         <item name="et_dividerErrorColor">#FFFF0000</item>
     </style>
 
     <style name="CustomCheckBoxDrawable" parent="Material.Drawable.CheckBox">
-        <item name="cbd_strokeColor">@drawable/color_switch</item>
+        <item name="cbd_strokeColor">@color/color_accent</item>
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">#000000</item>
     </style>

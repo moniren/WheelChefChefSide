@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         spCategory = (Spinner) findViewById(R.id.spinner_category);
         cbInHome = (CheckBox) findViewById(R.id.checkbox_in_home);
 
+        setUpToolbar();
         setUpButtons();
         setUpSpinner();
     }
@@ -87,6 +89,13 @@ public class RegisterActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    private void setUpToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_register);
+        setSupportActionBar(toolbar);
+        String title = getResources().getString(R.string.title_activity_register);
+        toolbar.setTitle(title);
     }
 
     private void setUpButtons() {

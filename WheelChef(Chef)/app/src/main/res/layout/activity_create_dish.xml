@@ -50,6 +50,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="3">
                 <TextView
+                    style="@style/CustomTextColor"
                     android:id="@+id/textview_add_dish_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,6 +167,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <TextView
+            style="@style/CustomTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.datamodels.DishModel;
 import com.wheelchef.wheelchefchef.dish.DishCursorAdapter;
@@ -33,14 +34,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by lyk on 11/20/2015.
  */
 public class MenuFragment extends Fragment {
 
-    private WaveSwipeRefreshLayout waveSwipeRefreshLayout;
+    private PullRefreshLayout pullRefreshLayout;
     private ListView listView;
 
     private static DatabaseHelper myDBHelper = null;
@@ -66,31 +66,24 @@ public class MenuFragment extends Fragment {
             DishesDataSource.createDishesTable();
         }
         View forReturn = inflater.inflate(R.layout.fragment_home, container, false);
-        waveSwipeRefreshLayout = (WaveSwipeRefreshLayout) forReturn.findViewById(R.id.layout_home_swipe);
+        pullRefreshLayout = (PullRefreshLayout) forReturn.findViewById(R.id.layout_home_swipe);
         listView = (ListView) forReturn.findViewById(R.id.dishes_list);
 
 
-        setUpWaveRefreshLayout();
+        setUpRefreshLayout();
         new LoadDishesFromLocal().execute();
         return forReturn;
     }
 
-    private void setUpWaveRefreshLayout(){
-        waveSwipeRefreshLayout.setWaveColor(this.getActivity().getResources().getColor(R.color.color_primary));
-        waveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+
+    private void setUpRefreshLayout(){
+        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Do work to refresh the list here.
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        waveSwipeRefreshLayout.setRefreshing(false);
-//                    }
-//                }, 3000);
+                // start refresh
                 new LoadDishesFromRemote().execute();
             }
         });
-
     }
 
 
@@ -311,7 +304,7 @@ public class MenuFragment extends Fragment {
             // dismiss the dialog after getting all products
 //            pDialog.dismiss();
             listView.setAdapter(dataAdapter);
-            waveSwipeRefreshLayout.setRefreshing(false);
+            pullRefreshLayout.setRefreshing(false);
 
         }
 
@@ -331,7 +324,7 @@ public class MenuFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            waveSwipeRefreshLayout.setRefreshing(true);
+            pullRefreshLayout.setRefreshing(true);
         }
 
         /**
@@ -341,7 +334,6 @@ public class MenuFragment extends Fragment {
             username = PrefUtil.getStringPreference(SessionManager.USERNAME, MenuFragment.this.getActivity());
             cursor = DishesDataSource.getWholeCursor(username);
             dataAdapter = new DishCursorAdapter(MenuFragment.this.getActivity(),cursor,0,MenuFragment.this);
-
             return null;
         }
 
@@ -351,7 +343,7 @@ public class MenuFragment extends Fragment {
         protected void onPostExecute(String file_url) {
             listView.setAdapter(null);
             listView.setAdapter(dataAdapter);
-            waveSwipeRefreshLayout.setRefreshing(false);
+            pullRefreshLayout.setRefreshing(false);
 
 
         }

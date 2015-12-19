@@ -33,6 +33,14 @@
         <item>Neptune</item>
     </string-array>
 
+
+    <array name="refresh_colors">
+        <item>@color/color_primary</item>
+        <item>@color/color_primary</item>
+        <item>@color/color_primary_dark</item>
+        <item>@color/color_primary_dark</item>
+    </array>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

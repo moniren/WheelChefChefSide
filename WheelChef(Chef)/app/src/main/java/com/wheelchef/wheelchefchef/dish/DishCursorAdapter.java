@@ -16,6 +16,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pkmmte.view.CircularImageView;
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.main.MenuFragment;
@@ -36,7 +37,7 @@ public class DishCursorAdapter extends CursorAdapter {
     private EditOnClickListener editOnClickListener;
 
     private static class ViewHolder  {
-        ImageView ivDishPhoto;
+        CircularImageView ivDishPhoto;
         TextView tvDishName;
         ImageButton deleteBtn;
         ImageButton editBtn;
@@ -113,7 +114,7 @@ public class DishCursorAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View   view    =   inflater.inflate(R.layout.card_view_dish, null);
         ViewHolder holder  =   new ViewHolder();
-        holder.ivDishPhoto = (ImageView) view.findViewById(R.id.imageview_dish_photo);
+        holder.ivDishPhoto = (CircularImageView) view.findViewById(R.id.imageview_dish_photo);
         holder.tvDishName    =   (TextView)  view.findViewById(R.id.textview_dish_name);
         holder.deleteBtn = (ImageButton) view.findViewById(R.id.btn_delete_dish);
         holder.editBtn = (ImageButton) view.findViewById(R.id.btn_edit_dish);

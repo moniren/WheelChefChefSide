@@ -34,18 +34,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-//        implements AdapterView.OnItemClickListener
-{
+public class MainActivity extends AppCompatActivity {
 
-
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-    //private ListView navList;
-    //private DrawerLayout drawerLayout;
     private LeftDrawerLayout mLeftDrawerLayout;
     private NavigationView navigationView;
-    private TextView usernameText;
-    private CustomMenuFragment mMenuFragment;
+    private NavigationMenuFragment navigationMenuFragment;
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
     private static final String TAG = "LoginActivity";
@@ -60,6 +53,10 @@ public class MainActivity extends AppCompatActivity
     private TextView toolbarTitle;
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
+
+    private enum Fragments {
+        MENU,CURRENT_ORDER
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +77,10 @@ public class MainActivity extends AppCompatActivity
 
         menuFragment = new MenuFragment();
         orderFragment = new OrderFragment();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
-        fragmentTransaction.commit();
+
+        switchFragment(Fragments.CURRENT_ORDER);
+//        getSupportActionBar().setTitle(R.string.current_order_fragment);
         toolbarTitle.setText(getResources().getString(R.string.current_order_fragment));
-        //loadSelection(0);
     }
 
     @Override
@@ -100,7 +96,6 @@ public class MainActivity extends AppCompatActivity
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         setUpNavigationView();
-//        setUpAccountInfo();
     }
 
     private void setUpToolbar() {
@@ -118,24 +113,19 @@ public class MainActivity extends AppCompatActivity
 
     private void setUpDrawer(){
         mLeftDrawerLayout = (LeftDrawerLayout)findViewById(R.id.drawer_layout);
-        mMenuFragment = (CustomMenuFragment) fragmentManager.findFragmentById(R.id.container_menu);
+        navigationMenuFragment = (NavigationMenuFragment) fragmentManager.findFragmentById(R.id.container_menu);
         FlowingView mFlowingView = (FlowingView) findViewById(R.id.flowing_view);
-        if (mMenuFragment == null) {
-            fragmentManager.beginTransaction().add(R.id.container_menu, mMenuFragment = new CustomMenuFragment()).commit();
+        if (navigationMenuFragment == null) {
+            fragmentManager.beginTransaction().add(R.id.container_menu, navigationMenuFragment = new NavigationMenuFragment()).commit();
         }
         mLeftDrawerLayout.setFluidView(mFlowingView);
-        mLeftDrawerLayout.setMenuFragment(mMenuFragment);
+        mLeftDrawerLayout.setMenuFragment(navigationMenuFragment);
 
     }
 
-//    private void setUpAccountInfo(){
-//        usernameText = mMenuFragment.getUsernameText();
-//        String username = PrefUtil.getStringPreference(SessionManager.USERNAME,this);
-//        usernameText.setText(username);
-//    }
 
     private void setUpNavigationView(){
-        navigationView = mMenuFragment.getNavigationView();
+        navigationView = navigationMenuFragment.getNavigationView();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
         // This method will trigger on item Click of navigation menu
         @Override
@@ -153,15 +143,13 @@ public class MainActivity extends AppCompatActivity
             switch (menuItem.getItemId()){
 
                 case R.id.home_item:
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentholder_main, menuFragment);
-                    fragmentTransaction.commit();
+                    switchFragment(Fragments.MENU);
+//                    getSupportActionBar().setTitle(R.string.home_fragment);
                     toolbarTitle.setText(getResources().getString(R.string.home_fragment));
                     return true;
                 case R.id.order_item:
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
-                    fragmentTransaction.commit();
+                    switchFragment(Fragments.CURRENT_ORDER);
+//                    getSupportActionBar().setTitle(R.string.current_order_fragment);
                     toolbarTitle.setText(getResources().getString(R.string.current_order_fragment));
                     return true;
                 case R.id.logout_item:
@@ -175,6 +163,23 @@ public class MainActivity extends AppCompatActivity
             }
         }
         });
+    }
+
+    private void switchFragment(Fragments target){
+        switch (target){
+            case MENU:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentholder_main, menuFragment);
+                fragmentTransaction.commit();
+                break;
+            case CURRENT_ORDER:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentholder_main, orderFragment);
+                fragmentTransaction.commit();
+                break;
+            default:
+                break;
+        }
     }
 
 

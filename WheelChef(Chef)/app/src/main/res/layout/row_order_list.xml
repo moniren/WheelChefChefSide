@@ -7,11 +7,17 @@
     android:background="@color/color_accent"
     android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/order_list_user_photo"
+        <com.pkmmte.view.CircularImageView
+            android:id = "@+id/order_list_user_photo"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="fitStart"/>
+            android:src="@drawable/unknown_person"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter"
+            app:border="false"
+            app:shadow="false" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

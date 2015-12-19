@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.pkmmte.view.CircularImageView;
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.datamodels.OrderModel;
@@ -50,7 +51,7 @@ public class DishListAdapter extends ArrayAdapter<String>{
             row = inflater.inflate(resource, parent, false);
 
             holder = new DishHolder();
-            holder.dishPic = (ImageView)row.findViewById(R.id.dish_list_dish_photo);
+            holder.dishPic = (CircularImageView)row.findViewById(R.id.dish_list_dish_photo);
             holder.txtDishName = (TextView)row.findViewById(R.id.dish_list_dishName);
             holder.txtUnitPrice = (TextView)row.findViewById(R.id.dish_list_dishUnitPrice);
             holder.txtQty = (TextView)row.findViewById(R.id.dish_list_dishQty);
@@ -88,7 +89,7 @@ public class DishListAdapter extends ArrayAdapter<String>{
 
     private static class DishHolder
     {
-        ImageView dishPic;
+        CircularImageView dishPic;
         TextView txtDishName;
         TextView txtUnitPrice;
         TextView txtQty;

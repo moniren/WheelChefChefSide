@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_primary"
+    android:layout_width="@dimen/navigation_drawer_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/textview_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use this picture?"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+    <ImageView
+        android:id="@+id/imageview_dialog_pic"
+        android:layout_below="@id/textview_dialog_title"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        />
+    <LinearLayout
+        android:background="@color/color_primary"
+        android:layout_below="@id/imageview_dialog_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.rey.material.widget.Button
+            android:background="@color/color_primary"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:id="@+id/btn_confirm"
+            android:text="Confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"
+            android:layout_weight="1"/>
+        <com.rey.material.widget.Button
+            android:background="@color/color_primary"
+            style="@style/FlatWaveColorButtonRippleStyle"
+            android:id="@+id/btn_cancel"
+            android:text="Cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:rd_enable="true"
+            app:rd_rippleType="wave"
+            app:rd_delayClick="afterRelease"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</RelativeLayout>

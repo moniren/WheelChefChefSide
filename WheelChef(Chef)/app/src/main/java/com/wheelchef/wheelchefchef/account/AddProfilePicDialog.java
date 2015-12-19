@@ -1,4 +1,4 @@
-package com.wheelchef.wheelchefchef.dish;
+package com.wheelchef.wheelchefchef.account;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,20 +16,20 @@ import com.wheelchef.wheelchefchef.R;
 import java.io.File;
 
 /**
- * Created by lyk on 12/7/2015.
+ * Created by lyk on 12/18/2015.
  */
-public class AddDishPhotoDialog extends Dialog {
+public class AddProfilePicDialog extends Dialog {
     private ImageButton btnTakePhoto;
     private ImageButton btnChoosePhoto;
-    private CreateDishActivity createDishActivity;
-    private static final String TAG = "AddDishPhotoDialog";
+    private EditAccountActivity editAccountActivity;
+    private static final String TAG = "AddProfilePicDialog";
 
-    public AddDishPhotoDialog(CreateDishActivity createDishActivity) {
-        super(createDishActivity);
-        this.setOwnerActivity(createDishActivity);
+    public AddProfilePicDialog(EditAccountActivity editAccountActivity) {
+        super(editAccountActivity);
+        this.setOwnerActivity(editAccountActivity);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.dialog_select_pic);
-        this.createDishActivity = createDishActivity;
+        this.editAccountActivity = editAccountActivity;
         btnTakePhoto = (ImageButton) findViewById(R.id.btn_add_dish_photo_camera);
         btnChoosePhoto = (ImageButton) findViewById(R.id.btn_add_dish_photo_library);
         setUpButtons();
@@ -40,22 +40,22 @@ public class AddDishPhotoDialog extends Dialog {
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDishPhotoDialog.this.dismiss();
+                AddProfilePicDialog.this.dismiss();
                 File photo = null;
                 try
                 {
                     // place where to store camera taken picture
-                    photo = AddDishPhotoDialog.this.createTemporaryFile("picture", ".jpg");
+                    photo = AddProfilePicDialog.this.createTemporaryFile("picture", ".jpg");
                     photo.delete();
-                    createDishActivity.setDishPhotoUri(Uri.fromFile(photo));
+                    editAccountActivity.setProfilePicUri(Uri.fromFile(photo));
                     Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takePicture.putExtra(MediaStore.EXTRA_OUTPUT, createDishActivity.getDishPhotoUri());
-                    AddDishPhotoDialog.this.getOwnerActivity().startActivityForResult(takePicture, CreateDishActivity.ACTION_TAKE_PHOTO);
+                    takePicture.putExtra(MediaStore.EXTRA_OUTPUT, editAccountActivity.getProfilePicUri());
+                    AddProfilePicDialog.this.getOwnerActivity().startActivityForResult(takePicture, EditAccountActivity.ACTION_TAKE_PHOTO);
                 }
                 catch(Exception e)
                 {
                     Log.v(TAG, "Can't create file to take picture!");
-                    Toast.makeText(AddDishPhotoDialog.this.getOwnerActivity(), "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddProfilePicDialog.this.getOwnerActivity(), "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -63,10 +63,10 @@ public class AddDishPhotoDialog extends Dialog {
         btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDishPhotoDialog.this.dismiss();
+                AddProfilePicDialog.this.dismiss();
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                AddDishPhotoDialog.this.getOwnerActivity().startActivityForResult(pickPhoto, CreateDishActivity.ACTION_CHOOSE_PHOTO);
+                AddProfilePicDialog.this.getOwnerActivity().startActivityForResult(pickPhoto, EditAccountActivity.ACTION_CHOOSE_PHOTO);
             }
         });
     }

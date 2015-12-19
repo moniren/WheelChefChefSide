@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.pkmmte.view.CircularImageView;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
@@ -48,7 +49,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderModel>{
             row = inflater.inflate(resource, parent, false);
 
             holder = new OrderHolder();
-            holder.userPic = (ImageView)row.findViewById(R.id.order_list_user_photo);
+            holder.userPic = (CircularImageView)row.findViewById(R.id.order_list_user_photo);
             holder.txtPrice = (TextView)row.findViewById(R.id.order_list_orderPrice);
             holder.txtTime = (TextView)row.findViewById(R.id.order_list_orderTime);
             holder.btn = (ImageButton)row.findViewById(R.id.btn_view_order_detail);
@@ -97,7 +98,7 @@ public class OrderListAdapter extends ArrayAdapter<OrderModel>{
 
     private static class OrderHolder
     {
-        ImageView userPic;
+        CircularImageView userPic;
         TextView txtPrice;
         TextView txtTime;
         ImageButton btn;

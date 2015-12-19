@@ -46,7 +46,7 @@
                     android:src="@drawable/unknown_person"
                     android:layout_centerVertical="true"/>
                 <com.rey.material.widget.ImageButton
-                    android:background="@color/color_accent"
+                    android:background="@drawable/circle_color_accent_48dp"
                     android:id="@+id/btn_add_profile_photo"
                     style="@style/FlatWaveColorButtonRippleStyle"
                     android:layout_width="48dp"
@@ -101,7 +101,7 @@
                     android:text="change your password"
                     android:layout_centerVertical="true"/>
                 <com.rey.material.widget.ImageButton
-                    android:background="@color/color_accent"
+                    android:background="@drawable/circle_color_accent_48dp"
                     android:id="@+id/btn_change_password"
                     style="@style/FlatWaveColorButtonRippleStyle"
                     android:layout_width="48dp"
@@ -123,7 +123,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp">
                 <!-- TODO move the string to strings.xml -->
                 <TextView
                     style="@style/CustomTextColor"
@@ -134,7 +135,7 @@
                     android:text="change your description"
                     android:layout_centerVertical="true"/>
                 <com.rey.material.widget.ImageButton
-                    android:background="@color/color_accent"
+                    android:background="@drawable/circle_color_accent_48dp"
                     android:id="@+id/btn_change_description"
                     style="@style/FlatWaveColorButtonRippleStyle"
                     android:layout_width="48dp"

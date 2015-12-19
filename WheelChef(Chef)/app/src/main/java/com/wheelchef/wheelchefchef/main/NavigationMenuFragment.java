@@ -1,7 +1,6 @@
 package com.wheelchef.wheelchefchef.main;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -23,7 +22,7 @@ import com.wheelchef.wheelchefchef.utils.PrefUtil;
 /**
  * Created by lyk on 11/14/2015.
  */
-public class CustomMenuFragment extends MenuFragment {
+public class NavigationMenuFragment extends MenuFragment {
 
 //    private ImageView ivMenuUserProfilePhoto;
     private TextView usernameText;
@@ -71,15 +70,15 @@ public class CustomMenuFragment extends MenuFragment {
         civProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomMenuFragment.this.getActivity(), EditAccountActivity.class);
-                CustomMenuFragment.this.startActivity(intent);
+                Intent intent = new Intent(NavigationMenuFragment.this.getActivity(), EditAccountActivity.class);
+                NavigationMenuFragment.this.startActivity(intent);
             }
         });
     }
 
     private void setUpSwitch(){
         //// TODO: add logic for retrieving the status
-        tvAvailability.setText(CustomMenuFragment.this.getActivity().getResources().getString(R.string.available));
+        tvAvailability.setText(NavigationMenuFragment.this.getActivity().getResources().getString(R.string.available));
 
         swAvailability.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
@@ -87,11 +86,11 @@ public class CustomMenuFragment extends MenuFragment {
                 if(checked){
                     BitmapUtil.setUnlocked(ivBg);
                     BitmapUtil.setUnlocked(civProfilePhoto);
-                    tvAvailability.setText(CustomMenuFragment.this.getActivity().getResources().getString(R.string.available));
+                    tvAvailability.setText(NavigationMenuFragment.this.getActivity().getResources().getString(R.string.available));
                 }else{
                     BitmapUtil.setLocked(ivBg);
                     BitmapUtil.setLocked(civProfilePhoto);
-                    tvAvailability.setText(CustomMenuFragment.this.getActivity().getResources().getString(R.string.busy));
+                    tvAvailability.setText(NavigationMenuFragment.this.getActivity().getResources().getString(R.string.busy));
                 }
             }
         });

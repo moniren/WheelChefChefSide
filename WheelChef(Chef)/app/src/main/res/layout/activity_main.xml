@@ -33,20 +33,29 @@
                 app:elevation="0dp"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <TextView
-                    android:id="@+id/custom_toolbar_title"
-                    android:textSize="20dp"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/custom_toolbar_title"
+                        android:textSize="20dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@drawable/shadow_toolbar_drops"
-                android:layout_marginTop="?attr/actionBarSize"/>
+                    <com.rey.material.widget.ImageButton
+                        style="@style/FlatWaveColorButtonRippleStyle"
+                        android:id="@+id/btn_toolbar_refresh"
+                        android:visibility="visible"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:src="@drawable/ic_autorenew_white_24dp"
+                        android:layout_alignParentRight="true"
+                        app:rd_delayClick="afterRelease"/>
+                </RelativeLayout>
 
 
             </android.support.v7.widget.Toolbar>

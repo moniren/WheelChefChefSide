@@ -11,11 +11,17 @@
         android:orientation="horizontal"
         android:background="@color/color_accent">
 
-        <ImageView
-            android:id="@+id/imageview_dish_photo"
-            android:layout_width="88dp"
-            android:layout_height="140dp"
-            android:scaleType="fitStart"/>
+        <com.pkmmte.view.CircularImageView
+            android:layout_gravity="center_vertical"
+            android:id = "@+id/imageview_dish_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
+            android:scaleType="fitCenter"
+            app:border="false"
+            app:border_color="@android:color/white"
+            app:border_width="2dp"
+            app:shadow="false" />
 
         <LinearLayout
             android:layout_width="fill_parent"

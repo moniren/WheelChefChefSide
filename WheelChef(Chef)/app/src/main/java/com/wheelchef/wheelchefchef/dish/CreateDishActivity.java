@@ -108,14 +108,14 @@ public class CreateDishActivity extends AppCompatActivity{
                 break;
             case ACTION_CHOOSE_PHOTO:
                 if(resultCode == RESULT_OK){
-                    Uri  photo = imageReturnedIntent.getData();
+                    dishPhotoUri = imageReturnedIntent.getData();
                     try {
-                        dishPhotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photo);
+                        dishPhotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dishPhotoUri);
                         findViewById(R.id.textview_add_dish_photo).setVisibility(View.INVISIBLE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    dishPhoto.setImageURI(photo);
+                    dishPhoto.setImageURI(dishPhotoUri);
                     Log.d(TAG,"Successfully got the photo!");
                 }
                 break;
@@ -404,50 +404,6 @@ public class CreateDishActivity extends AppCompatActivity{
          * After completing background task Dismiss the progress dialog
          * **/
         protected void onPostExecute(String file_url) {
-            /*AsyncHttpClient client = new AsyncHttpClient();
-            // Don't forget to change the IP address to your LAN address. Port no as well.
-            client.post(ConnectionParams.URL_CHEF_UPLOAD_DISH_IMAGE,
-                    picParams, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            // Hide Progress Dialog
-                            pDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Status: "+statusCode+" Header: "+headers.toString()
-                                    +" Response: "+responseBody.toString(),
-                                    Toast.LENGTH_LONG).show();
-
-                            Log.d(TAG,"Status: "+statusCode+" Header: "+headers.toString()
-                                    +" Response: "+responseBody.toString());
-
-                            CreateDishActivity.this.finish();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            // Hide Progress Dialog
-                            pDialog.dismiss();
-                            // When Http response code is '404'
-                            if (statusCode == 404) {
-                                Toast.makeText(getApplicationContext(),
-                                        "Requested resource not found",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                            // When Http response code is '500'
-                            else if (statusCode == 500) {
-                                Toast.makeText(getApplicationContext(),
-                                        "Something went wrong at server end",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                            // When Http response code other than 404, 500
-                            else {
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : "
-                                                + statusCode, Toast.LENGTH_LONG)
-                                        .show();
-                            }
-                        }
-                    });*/
             // dismiss the dialog after getting all products
             pDialog.dismiss();
             if (success == 1) {

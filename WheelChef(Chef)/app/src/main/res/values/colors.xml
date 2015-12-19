@@ -10,4 +10,11 @@
     <color name="background">#F5F5F5</color>
     <color name="grey">#757575</color>
     <color name="dark_grey">#212121</color>
+
+    <color name="orange">#ff9800</color>
+    <color name="pink">#f06292</color>
+    <color name="green">#259b24</color>
+    <color name="blue">#5677fc</color>
+    <color name="red">#FFC93437</color>
+    <color name="yellow">#FFF7D23E</color>
 </resources>

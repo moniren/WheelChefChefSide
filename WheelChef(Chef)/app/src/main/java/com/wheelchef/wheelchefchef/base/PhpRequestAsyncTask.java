@@ -1,16 +1,14 @@
 package com.wheelchef.wheelchefchef.base;
 
+import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
 
-import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by lyk on 12/19/2015.
@@ -52,9 +50,9 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... args) {
-        List<NameValuePair> params = customAsyncTaskToolbarActivity.setUpParams(action);
+        ContentValues values = customAsyncTaskToolbarActivity.setUpParams(action);
         // getting JSON string from URL
-        JSONObject json = jsonParser.makeHttpRequest(requestedService, callMethod, params);
+        JSONObject json = jsonParser.makeHttpRequest(requestedService, callMethod, values);
 
         // Check your log cat for JSON response
         Log.d(TAG, json.toString());

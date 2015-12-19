@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        if(intent.getBooleanExtra(LoginActivity.NEEDVERIFY,false)){
+        if(intent.getBooleanExtra(LoginActivity.NEED_VERIFY,false)){
             String username = PrefUtil.getStringPreference(SessionManager.USERNAME, this);
             String password = PrefUtil.getStringPreference(SessionManager.PASSWORD,this);
             new VerifyTask(username, password).execute();

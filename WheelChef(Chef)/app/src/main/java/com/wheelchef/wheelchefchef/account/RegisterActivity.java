@@ -3,6 +3,7 @@ package com.wheelchef.wheelchefchef.account;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,11 +11,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,23 +24,19 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.base.CustomAsyncTaskToolbarActivity;
+import com.wheelchef.wheelchefchef.base.PhpRequestAsyncTask;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.JSONParser;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends CustomAsyncTaskToolbarActivity {
 
     private Button bRegister;
     private EditText etUsername, etPassword, etConfirmPassword, etPhoneNumber, etAddressRoad, etAddressBlk, etAddressUnit, etZipcode;
@@ -80,7 +74,6 @@ public class RegisterActivity extends AppCompatActivity {
         spCategory = (Spinner) findViewById(R.id.spinner_category);
         cbInHome = (CheckBox) findViewById(R.id.checkbox_in_home);
 
-        setUpToolbar();
         setUpButtons();
         setUpSpinner();
     }
@@ -91,9 +84,9 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_register);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         String title = getResources().getString(R.string.title_activity_register);
         toolbar.setTitle(title);
     }
@@ -126,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (cbInHome.isChecked()) {
                     LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    int apiLevel = Integer.valueOf(android.os.Build.VERSION.SDK);
+                    int apiLevel = Build.VERSION.SDK_INT;
                     if(apiLevel>=23){
                         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
@@ -165,13 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if(!isValidEmail(username)){
-                    //til.setErrorEnabled(true);
                     etUsername.setError("invalid email address.");
-
-                   // etUsername.getBackground().setColorFilter(getResources().getColor(R.color.color_primary), PorterDuff.Mode.SRC_ATOP);
-                    //Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-                    //til.startAnimation(shake);
-                    //til.setError("Please enter an email address");
                 }
                 else if(password.length() < 6 || password.length()>20){
                     etPassword.setError("invalid password.");
@@ -181,7 +168,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else{
                     if(valid)
-                        new RegisterTask().execute();
+                        new PhpRequestAsyncTask(RegisterActivity.this,ConnectionParams.URL_CHEF_REGISTER
+                        ,"POST",-1).execute();
                 }
             }
         });
@@ -214,73 +202,50 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private class RegisterTask extends AsyncTask<String, String, String> {
-        int success = 0;
-        String msg = "";
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
-            pDialog.setMessage("Creating account...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-        /**
-         * getting All products from url
-         * */
-        protected String doInBackground(String... args) {
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("username", username));
-            params.add(new BasicNameValuePair("password", password));
-            params.add(new BasicNameValuePair("phone", phoneNumber));
-            params.add(new BasicNameValuePair("address_string", addressString));
-            params.add(new BasicNameValuePair("zipcode", String.valueOf(zipcode)));
-            params.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
-            params.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
-            params.add(new BasicNameValuePair("category", category));
-
-            // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_REGISTER, "POST", params);
-            Log.d(TAG, "with the username: " + username);
-            Log.d(TAG, "with the password: " + password);
-            Log.d(TAG, "json received is: " + json.toString());
-
-            try {
-                // Checking for SUCCESS TAG
-                success = json.getInt(ConnectionParams.TAG_SUCCESS);
-                msg = json.getString(ConnectionParams.TAG_MSG);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
-            pDialog.dismiss();
-            if (success == 1) {
-                SessionManager.login(RegisterActivity.this,username,password);
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                Log.d(TAG, "login succeed!");
-                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
-                //finish this activity once registered successfully
-                RegisterActivity.this.finish();
-            } else {
-                Log.d(TAG,"login failed!");
-                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
-            }
-        }
-
-
+    @Override
+    public void preAsyncTask(int action) {
+        pDialog = new ProgressDialog(RegisterActivity.this);
+        pDialog.setMessage("Creating account...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
+
+    @Override
+    public ContentValues setUpParams(int action) {
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("password", password);
+        values.put("phone", phoneNumber);
+        values.put("address_string", addressString);
+        values.put("zipcode", String.valueOf(zipcode));
+        values.put("latitude", String.valueOf(latitude));
+        values.put("longitude", String.valueOf(longitude));
+        values.put("category", category);
+        return values;
+    }
+
+    @Override
+    public void doInAsyncTask(int action, int success, String msg) {
+        // do nothing in this case
+    }
+
+    @Override
+    public void postAsyncTask(int action, int success, String msg) {
+        pDialog.dismiss();
+        if (success == 1) {
+            SessionManager.login(RegisterActivity.this,username,password);
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            Log.d(TAG, "login succeed!");
+            Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
+            //finish this activity once registered successfully
+            RegisterActivity.this.finish();
+        } else {
+            Log.d(TAG,"login failed!");
+            Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_LONG).show();
+        }
+    }
+
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

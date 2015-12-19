@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_login"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_primary"
@@ -35,28 +35,6 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="com.wheelchef.wheelchef.registerlogin.LoginActivity"
         android:padding="10dp">
-
-        <!--<TextView-->
-            <!--android:text="Username"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/etUsername"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"/>-->
-
-        <!--<TextView-->
-            <!--android:text="Password"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-        <!--<EditText-->
-            <!--android:id="@+id/etPassword"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:layout_marginBottom="10dp"/>-->
 
         <com.rey.material.widget.EditText
             android:id="@+id/etUsername"

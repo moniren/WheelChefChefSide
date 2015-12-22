@@ -7,12 +7,13 @@ import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 
 /**
  * Created by MHUIQ on 12/12/2015.
  */
-public class OrderProgressActivity extends AppCompatActivity {
+public class OrderProgressActivity extends CustomToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_progress);
@@ -30,6 +31,11 @@ public class OrderProgressActivity extends AppCompatActivity {
         setUpToolbar();
 
         setUpData();*/
+    }
+
+    @Override
+    protected void setUpToolbar(){
+        super.setUpToolbar();
     }
 
     @Override

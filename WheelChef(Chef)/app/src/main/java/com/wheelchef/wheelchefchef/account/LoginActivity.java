@@ -11,19 +11,16 @@ import android.widget.Toast;
 
 import com.rey.material.widget.EditText;
 import com.wheelchef.wheelchefchef.R;
-import com.wheelchef.wheelchefchef.base.CustomAsyncTaskToolbarActivity;
+import com.wheelchef.wheelchefchef.base.PhpAsyncTaskComponent;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 import com.wheelchef.wheelchefchef.base.PhpRequestAsyncTask;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class LoginActivity extends CustomAsyncTaskToolbarActivity{
+public class LoginActivity extends CustomToolbarActivity implements PhpAsyncTaskComponent {
 
     private Button bLogin, bRegisterLink;
     private EditText etUsername, etPassword;
@@ -57,6 +54,7 @@ public class LoginActivity extends CustomAsyncTaskToolbarActivity{
         bLogin = (Button) findViewById(R.id.bLogin);
         bRegisterLink = (Button) findViewById(R.id.bRegisterLink);
 
+        setUpToolbar();
         setUpButtons();
     }
 
@@ -67,7 +65,7 @@ public class LoginActivity extends CustomAsyncTaskToolbarActivity{
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
                 // action -1 means nothing to filter
-                new PhpRequestAsyncTask(LoginActivity.this,ConnectionParams.URL_CHEF_LOGIN,callMethod,-1).execute();
+                new PhpRequestAsyncTask(LoginActivity.this,ConnectionParams.URL_CHEF_LOGIN,"POST",-1).execute();
             }
         });
 
@@ -97,7 +95,7 @@ public class LoginActivity extends CustomAsyncTaskToolbarActivity{
     }
 
     @Override
-    public void doInAsyncTask(int action, int success, String msg) {
+    public void doInAsyncTask(int action, int success,JSONObject json) {
         //empty in this case
     }
 

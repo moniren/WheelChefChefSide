@@ -10,11 +10,12 @@ import android.view.View;
 
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 
 /**
  * Created by lyk on 12/16/2015.
  */
-public class EditAccountActivity extends AppCompatActivity {
+public class EditAccountActivity extends CustomToolbarActivity {
 
     private static final String TAG = "EditAccountActivity";
 
@@ -39,9 +40,9 @@ public class EditAccountActivity extends AppCompatActivity {
         setUpButtons();
     }
 
-    private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         String title = getResources().getString(R.string.title_activity_edit_account);
         toolbar.setTitle(title);
     }

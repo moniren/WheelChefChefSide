@@ -2,14 +2,13 @@ package com.wheelchef.wheelchefchef.dish;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -19,33 +18,32 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.loopj.android.http.RequestParams;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
 import com.wheelchef.wheelchefchef.R;
 import com.wheelchef.wheelchefchef.account.SessionManager;
+import com.wheelchef.wheelchefchef.base.PhpAsyncTaskComponent;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
+import com.wheelchef.wheelchefchef.base.PhpRequestAsyncTask;
 import com.wheelchef.wheelchefchef.utils.BitmapUtil;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
-import com.wheelchef.wheelchefchef.utils.JSONParser;
 import com.wheelchef.wheelchefchef.utils.HashGenerator;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * Created by lyk on 12/4/2015.
  */
-public class CreateDishActivity extends AppCompatActivity{
+public class CreateDishActivity extends CustomToolbarActivity implements PhpAsyncTaskComponent {
+
+    private static final int TASK_CREATE_DISH = 11;
+    private static final int TASK_UPLOAD_IMAGE = 22;
 
 
     private Uri dishPhotoUri;
@@ -56,8 +54,6 @@ public class CreateDishActivity extends AppCompatActivity{
     private static final String TAG = "CreateDishActivity";
     // Progress Dialog
     private ProgressDialog pDialog;
-    // Creating JSON Parser object
-    private JSONParser jParser = new JSONParser();
 
     private ImageButton btnAddPhoto;
     private Button btnCreateDish;
@@ -71,7 +67,6 @@ public class CreateDishActivity extends AppCompatActivity{
 
 
     private String[] items;
-    private long currentTime;
 
 
     @Override
@@ -100,8 +95,6 @@ public class CreateDishActivity extends AppCompatActivity{
         switch(requestCode) {
             case ACTION_TAKE_PHOTO:
                 if(resultCode == RESULT_OK){
-//                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
-//                    dishPhoto.setImageBitmap(photo);
                     this.grabImage(dishPhoto);
                     Log.d(TAG,"Successfully got the photo!");
                 }
@@ -122,10 +115,9 @@ public class CreateDishActivity extends AppCompatActivity{
         }
     }
 
-
-    private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_create_dish);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         String title = getResources().getString(R.string.title_activity_create_dish);
         toolbar.setTitle(title);
     }
@@ -135,7 +127,7 @@ public class CreateDishActivity extends AppCompatActivity{
 
 
     private String generateDishId(String dishName){
-        currentTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();
         return HashGenerator.getSHA256hash(dishName + currentTime);
     }
 
@@ -176,8 +168,9 @@ public class CreateDishActivity extends AppCompatActivity{
                 }
 
                 if(findViewById(R.id.textview_add_dish_photo).getVisibility()!= View.INVISIBLE){
+                    //Todo: change the string to be xml resource
                     ((android.widget.TextView)findViewById(R.id.textview_add_dish_photo)).setText("Please upload an image");
-                    ((android.widget.TextView)findViewById(R.id.textview_add_dish_photo)).setTextColor(CreateDishActivity.this.getResources().getColor(android.R.color.holo_red_light));
+                    ((android.widget.TextView)findViewById(R.id.textview_add_dish_photo)).setTextColor(ContextCompat.getColor(CreateDishActivity.this,android.R.color.holo_red_light));
                 }
                 else if(dishName.length()==0) {
                     etDishName.setError("cannot be empty!");
@@ -194,7 +187,8 @@ public class CreateDishActivity extends AppCompatActivity{
                 else{
                     dishPrice = Float.parseFloat(etDishPrice.getText().toString());
                     if (valid)
-                        new CreateDishTask().execute();
+                        new PhpRequestAsyncTask(CreateDishActivity.this,ConnectionParams.URL_CHEF_CREATE_DISH,
+                                "POST",TASK_CREATE_DISH).execute();
                 }
 
 
@@ -250,177 +244,115 @@ public class CreateDishActivity extends AppCompatActivity{
         }
     }
 
-    private class CreateDishTask extends AsyncTask<String, String, String> {
-        int success = 0;
-        String msg = "";
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(CreateDishActivity.this);
-            pDialog.setMessage("Creating dish...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+    @Override
+    public void preAsyncTask(int action) {
+        switch(action){
+            case TASK_CREATE_DISH:
+                pDialog = new ProgressDialog(CreateDishActivity.this);
+                pDialog.setMessage("Creating dish...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
+                break;
+            case TASK_UPLOAD_IMAGE:
+                pDialog = new ProgressDialog(CreateDishActivity.this);
+                pDialog.setMessage("Uploading dish image...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
+                break;
+            default:
+                break;
         }
-
-        /**
-         * getting All products from url
-         * */
-        protected String doInBackground(String... args) {
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("id", dishId));
-            params.add(new BasicNameValuePair("name", dishName));
-            params.add(new BasicNameValuePair("chefname", username));
-            params.add(new BasicNameValuePair("price", String.valueOf(dishPrice)));
-            params.add(new BasicNameValuePair("desc", dishDesc));
-            params.add(new BasicNameValuePair("discount", String.valueOf(dishDiscount)));
-            params.add(new BasicNameValuePair("category", dishCategory));
-
-
-            String filePath = username+"/dishes/"+dishId+".png";
-            params.add(new BasicNameValuePair("photo", filePath));
-
-
-            // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_CREATE_DISH, "POST", params);
-            Log.d(TAG, "with the dishId: " + dishId);
-            Log.d(TAG, "with the dishName: " + dishName);
-            Log.d(TAG, "json received is: " + json.toString());
-
-            try {
-                // Checking for SUCCESS TAG
-                success = json.getInt(ConnectionParams.TAG_SUCCESS);
-                msg = json.getString(ConnectionParams.TAG_MSG);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
-            pDialog.dismiss();
-            if (success == 1) {
-                Log.d(TAG, "Create dish succeed!");
-                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
-                //finish this activity once registered successfully
-                new UploadImageTask().execute();
-
-            } else {
-                Log.d(TAG,"Create dish failed!");
-                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
-            }
-        }
-
 
     }
 
-    private class UploadImageTask extends AsyncTask<String, String, String> {
+    @Override
+    public ContentValues setUpParams(int action) {
+        ContentValues values = new ContentValues();
+        switch(action){
+            case TASK_CREATE_DISH:
+                values.put("id", dishId);
+                values.put("name", dishName);
+                values.put("chefname", username);
+                values.put("price", String.valueOf(dishPrice));
+                values.put("desc", dishDesc);
+                values.put("discount", String.valueOf(dishDiscount));
+                values.put("category", dishCategory);
+                String filePath = username+"/dishes/"+dishId+".png";
+                values.put("photo", filePath);
+                break;
+            case TASK_UPLOAD_IMAGE:
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Must compress the Image to reduce image size to make upload easy
+                dishPhotoBitmap = BitmapUtil.getResizedBitmap(dishPhotoBitmap,dishPhotoBitmap.getWidth()/5,dishPhotoBitmap.getHeight()/5);
+                dishPhotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+                byte[] byteArr = stream.toByteArray();
 
-        RequestParams picParams = new RequestParams();
-        int success = 0;
-        String msg = "";
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(CreateDishActivity.this);
-            pDialog.setMessage("Uploading dish image...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+                // Encode Image to String
+                String encodedString = Base64.encodeToString(byteArr, 0);
+
+                filePath = username+"/dishes/"+dishId+".png";
+
+
+                values.put("chefname", username);
+                values.put("photo", filePath);
+                values.put("data", encodedString);
+
+
+                break;
+            default:
+                break;
         }
-
-        /**
-         * getting All products from url
-         * */
-        protected String doInBackground(String... args) {
-            picParams.put("chefname", username);
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            // Must compress the Image to reduce image size to make upload easy
-            dishPhotoBitmap = BitmapUtil.getResizedBitmap(dishPhotoBitmap,dishPhotoBitmap.getWidth()/5,dishPhotoBitmap.getHeight()/5);
-
-            dishPhotoBitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-
-            byte[] byteArr1 = stream.toByteArray();
-
-            /*BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            Bitmap middleBitmap = BitmapFactory.decodeByteArray(byteArr1, 0, byteArr1.length, options);
-
-            //if(options.outHeight > options.outWidth)
-                //options.inSampleSize = BitmapUtil.calculateInSampleSize(options, 720, 1280);
-            //else
-                //options.inSampleSize = BitmapUtil.calculateInSampleSize(options, 1280, 720);
-            options.inSampleSize = 4;
-            options.inJustDecodeBounds = false;
-            middleBitmap = BitmapFactory.decodeByteArray(byteArr1, 0, byteArr1.length, options);
-
-            //Bitmap finalBitmap = BitmapUtil.getResizedBitmap(middleBitmap,middleBitmap.getWidth()/10,middleBitmap.getHeight()/10);
-                    //Bitmap.createScaledBitmap(middleBitmap, middleBitmap.getWidth()/10, middleBitmap.getHeight()/10, false);
-            //finalBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
-
-            byte[] byteArr2 = stream.toByteArray();*/
-
-            // Encode Image to String
-            String encodedString = Base64.encodeToString(byteArr1, 0);
-            picParams.put("data", encodedString);
-
-            String filePath = username+"/dishes/"+dishId+".png";
-            picParams.put("photo", filePath);
-
-
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("chefname", username));
-            params.add(new BasicNameValuePair("photo", filePath));
-            params.add(new BasicNameValuePair("data", encodedString));
-
-            Log.d(TAG, "with the chefname: " + username);
-            Log.d(TAG, "with the photo: " + filePath);
-            // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_UPLOAD_DISH_IMAGE, "POST", params);
-            Log.d(TAG, "json received is: " + json.toString());
-
-            try {
-                // Checking for SUCCESS TAG
-                success = json.getInt(ConnectionParams.TAG_SUCCESS);
-                msg = json.getString(ConnectionParams.TAG_MSG);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
-            pDialog.dismiss();
-            if (success == 1) {
-                Log.d(TAG, "Upload dish image succeed!");
-                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
-                //finish this activity once registered successfully
-                CreateDishActivity.this.finish();
-
-            } else {
-                Log.d(TAG,"Upload dish image failed!");
-                Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
-            }
-        }
-
-
+        return values;
     }
 
+    @Override
+    public void doInAsyncTask(int action, int success, JSONObject json) {
+        switch(action){
+            case TASK_CREATE_DISH:
+                break;
+            case TASK_UPLOAD_IMAGE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void postAsyncTask(int action, int success, String msg) {
+        switch(action){
+            case TASK_CREATE_DISH:
+                pDialog.dismiss();
+                if (success == 1) {
+                    Log.d(TAG, "Create dish succeed!");
+                    Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+                    //finish this activity once registered successfully
+                    new PhpRequestAsyncTask(CreateDishActivity.this,ConnectionParams.URL_CHEF_UPLOAD_DISH_IMAGE,
+                            "POST",TASK_UPLOAD_IMAGE).execute();
+
+                } else {
+                    Log.d(TAG,"Create dish failed!");
+                    Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+                }
+                break;
+            case TASK_UPLOAD_IMAGE:
+                pDialog.dismiss();
+                if (success == 1) {
+                    Log.d(TAG, "Upload dish image succeed!");
+                    Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+                    //finish this activity once registered successfully
+                    CreateDishActivity.this.finish();
+
+                } else {
+                    Log.d(TAG,"Upload dish image failed!");
+                    Toast.makeText(CreateDishActivity.this, msg, Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     private class EditTextFocusListener implements View.OnFocusChangeListener{
         private EditText wrapper;
@@ -436,8 +368,6 @@ public class CreateDishActivity extends AppCompatActivity{
             }
         }
     }
-
-
 
 
     public Uri getDishPhotoUri() {

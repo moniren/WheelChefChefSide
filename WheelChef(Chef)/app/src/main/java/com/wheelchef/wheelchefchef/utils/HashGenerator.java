@@ -14,9 +14,7 @@ public class HashGenerator {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(input.getBytes("UTF-16"));
             digested = md.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e){
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -30,9 +28,7 @@ public class HashGenerator {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(input.getBytes("UTF-16"));
             digested = md.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e){
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 

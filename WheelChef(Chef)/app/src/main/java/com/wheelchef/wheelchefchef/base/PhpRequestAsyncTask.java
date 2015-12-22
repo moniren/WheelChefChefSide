@@ -22,7 +22,7 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
 
     private static JSONParser jsonParser = null;
 
-    private CustomAsyncTaskToolbarActivity customAsyncTaskToolbarActivity;
+    private PhpAsyncTaskComponent phpAsyncTaskComponent;
 
     private String requestedService;
 
@@ -30,10 +30,10 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
 
     private int action;
 
-    public PhpRequestAsyncTask(CustomAsyncTaskToolbarActivity customAsyncTaskToolbarActivity,
+    public PhpRequestAsyncTask(PhpAsyncTaskComponent phpAsyncTaskComponent,
                                String requestedService, String callMethod,int action){
 
-        this.customAsyncTaskToolbarActivity = customAsyncTaskToolbarActivity;
+        this.phpAsyncTaskComponent = phpAsyncTaskComponent;
         this.requestedService = requestedService;
         this.callMethod = callMethod;
         this.action = action;
@@ -45,12 +45,12 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        customAsyncTaskToolbarActivity.preAsyncTask(action);
+        phpAsyncTaskComponent.preAsyncTask(action);
     }
 
     @Override
     protected Void doInBackground(Void... args) {
-        ContentValues values = customAsyncTaskToolbarActivity.setUpParams(action);
+        ContentValues values = phpAsyncTaskComponent.setUpParams(action);
         // getting JSON string from URL
         JSONObject json = jsonParser.makeHttpRequest(requestedService, callMethod, values);
 
@@ -60,8 +60,8 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
         try {
             // Checking for SUCCESS TAG
             success = json.getInt(ConnectionParams.TAG_SUCCESS);
-            msg = json.getString(ConnectionParams.TAG_MSG);
-            customAsyncTaskToolbarActivity.doInAsyncTask(action,success,msg);
+            msg = null;
+            phpAsyncTaskComponent.doInAsyncTask(action, success,json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -72,6 +72,6 @@ public class PhpRequestAsyncTask extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        customAsyncTaskToolbarActivity.postAsyncTask(action,success,msg);
+        phpAsyncTaskComponent.postAsyncTask(action, success, msg);
     }
 }

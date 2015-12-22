@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.account.SessionManager;
 import com.wheelchef.wheelchefchef.datamodels.OrderModel;
 import com.wheelchef.wheelchefchef.order.OrderListAdapter;
-import com.wheelchef.wheelchefchef.account.SessionManager;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ public class OrderFragment extends android.support.v4.app.Fragment {
 
 
     private ListView listView;
-    private Button btnViewDetail;
     private static OrderModel m1 = null;
     private static OrderModel m2 = null;
 
@@ -31,11 +29,6 @@ public class OrderFragment extends android.support.v4.app.Fragment {
         // Get ListView object from xml
         listView = (ListView) forReturn.findViewById(R.id.order_list);
 
-        // Defined Array values to show in ListView
-        String[] values = new String[] {
-                "Username: mhq6634   \nTime:2015.12.11 12:15pm",
-                "Username: lyk       \nTime:2015.12.11 12:25pm"
-        };
 
         ArrayList<OrderModel> dataList = new ArrayList<>();
 

@@ -24,11 +24,13 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.wheelchef.wheelchefchef.R;
-import com.wheelchef.wheelchefchef.base.CustomAsyncTaskToolbarActivity;
+import com.wheelchef.wheelchefchef.base.PhpAsyncTaskComponent;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 import com.wheelchef.wheelchefchef.base.PhpRequestAsyncTask;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
-import com.wheelchef.wheelchefchef.utils.JSONParser;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class RegisterActivity extends CustomAsyncTaskToolbarActivity {
+public class RegisterActivity extends CustomToolbarActivity implements PhpAsyncTaskComponent {
 
     private Button bRegister;
     private EditText etUsername, etPassword, etConfirmPassword, etPhoneNumber, etAddressRoad, etAddressBlk, etAddressUnit, etZipcode;
@@ -52,8 +54,6 @@ public class RegisterActivity extends CustomAsyncTaskToolbarActivity {
     private static final String TAG = "RegisterActivity";
     // Progress Dialog
     private ProgressDialog pDialog;
-    // Creating JSON Parser object
-    private JSONParser jParser = new JSONParser();
 
 
     @Override
@@ -74,6 +74,7 @@ public class RegisterActivity extends CustomAsyncTaskToolbarActivity {
         spCategory = (Spinner) findViewById(R.id.spinner_category);
         cbInHome = (CheckBox) findViewById(R.id.checkbox_in_home);
 
+        setUpToolbar();
         setUpButtons();
         setUpSpinner();
     }
@@ -226,7 +227,7 @@ public class RegisterActivity extends CustomAsyncTaskToolbarActivity {
     }
 
     @Override
-    public void doInAsyncTask(int action, int success, String msg) {
+    public void doInAsyncTask(int action, int success,JSONObject json) {
         // do nothing in this case
     }
 

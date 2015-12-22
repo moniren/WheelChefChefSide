@@ -4,24 +4,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesDataSource;
 import com.wheelchef.wheelchefchef.sqlitedb.DishesTable;
-
-import java.util.ArrayList;
 
 /**
  * Created by lyk on 12/13/2015.
  */
-public class ViewDishDetailActivity extends AppCompatActivity {
+public class ViewDishDetailActivity extends CustomToolbarActivity {
     public static final String DISH_ID = "dish_id";
 
     private TextView tvDishName, tvDishDesc, tvDishPrice, tvDishDiscount, tvDishCategory;
@@ -45,10 +40,9 @@ public class ViewDishDetailActivity extends AppCompatActivity {
 
     }
 
-
-    private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_view_dish_detail);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         String title = getResources().getString(R.string.title_activity_view_dish_detail);
         toolbar.setTitle(title);
     }

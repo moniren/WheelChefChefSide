@@ -1,39 +1,33 @@
 package com.wheelchef.wheelchefchef.order;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.wheelchef.wheelchefchef.R;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
 import com.wheelchef.wheelchefchef.datamodels.OrderModel;
 import com.wheelchef.wheelchefchef.dish.DishListAdapter;
 import com.wheelchef.wheelchefchef.main.MainActivity;
 import com.wheelchef.wheelchefchef.main.OrderFragment;
-import com.wheelchef.wheelchefchef.utils.JSONParser;
 
 import java.util.ArrayList;
 
 /**
  * Created by MHUIQ on 12/12/2015.
  */
-public class ViewOrderDetailActivity extends AppCompatActivity {
+public class ViewOrderDetailActivity extends CustomToolbarActivity {
     public static final String ORDER_MODEL_OBJ = "orderModelObj";
     private Button bAccept, bReject, bProgress;
     private TextView tvOrderID, tvOrderTime, tvOrderPrice, tvCutomerID;
     private OrderModel orderModel = null;
 
     private ListView listView;
-    private ProgressDialog pDialog;
-    // Creating JSON Parser object
-    private JSONParser jParser = new JSONParser();
 
 
     @Override
@@ -105,9 +99,9 @@ public class ViewOrderDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setUpToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_view_order_detail);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         String title = getResources().getString(R.string.title_activity_view_order_detail);
         toolbar.setTitle(title);
     }

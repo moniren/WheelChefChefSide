@@ -1,13 +1,11 @@
 package com.wheelchef.wheelchefchef.main;
 
+import android.content.ContentValues;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,22 +16,18 @@ import android.widget.Toast;
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.wheelchef.wheelchefchef.R;
-import com.wheelchef.wheelchefchef.dish.CreateDishActivity;
 import com.wheelchef.wheelchefchef.account.LoginActivity;
 import com.wheelchef.wheelchefchef.account.SessionManager;
+import com.wheelchef.wheelchefchef.base.PhpAsyncTaskComponent;
+import com.wheelchef.wheelchefchef.base.CustomToolbarActivity;
+import com.wheelchef.wheelchefchef.base.PhpRequestAsyncTask;
+import com.wheelchef.wheelchefchef.dish.CreateDishActivity;
 import com.wheelchef.wheelchefchef.utils.ConnectionParams;
-import com.wheelchef.wheelchefchef.utils.JSONParser;
 import com.wheelchef.wheelchefchef.utils.PrefUtil;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends CustomToolbarActivity implements PhpAsyncTaskComponent {
 
     private LeftDrawerLayout mLeftDrawerLayout;
     private NavigationView navigationView;
@@ -42,16 +36,43 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private static final String TAG = "LoginActivity";
 
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MSG = "message";
+
     private MenuFragment menuFragment;
     private OrderFragment orderFragment;
 
-    private Toolbar toolbar;
     private TextView toolbarTitle;
-    // Creating JSON Parser object
-    JSONParser jParser = new JSONParser();
+
+    private String username, password;
+
+    @Override
+    public void preAsyncTask(int action) {
+
+    }
+
+    @Override
+    public ContentValues setUpParams(int action) {
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("password", password);
+        return values;
+    }
+
+    @Override
+    public void doInAsyncTask(int action, int success,JSONObject json) {
+
+    }
+
+    @Override
+    public void postAsyncTask(int action, int success, String msg) {
+        if (success == 1) {
+            Log.d(TAG, "login succeed!");
+        } else {
+            SessionManager.logout(MainActivity.this);
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            Log.d(TAG, "login failed!");
+            finish();
+        }
+    }
 
     private enum Fragments {
         MENU,CURRENT_ORDER
@@ -62,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if(intent.getBooleanExtra(LoginActivity.NEED_VERIFY,false)){
-            String username = PrefUtil.getStringPreference(SessionManager.USERNAME, this);
-            String password = PrefUtil.getStringPreference(SessionManager.PASSWORD,this);
-            new VerifyTask(username, password).execute();
+            username = PrefUtil.getStringPreference(SessionManager.USERNAME, this);
+            password = PrefUtil.getStringPreference(SessionManager.PASSWORD,this);
+            new PhpRequestAsyncTask(MainActivity.this,ConnectionParams.URL_CHEF_LOGIN,
+                    "POST",-1).execute();
         }
 
         setContentView(R.layout.activity_main);
@@ -97,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
     }
 
-    private void setUpToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+    @Override
+    protected void setUpToolbar() {
+        super.setUpToolbar();
         toolbarTitle = (TextView) findViewById(R.id.custom_toolbar_title);
-        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,57 +224,5 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this,e.toString(),Toast.LENGTH_LONG);
             toast.show();
         }
-    }
-
-
-    private class VerifyTask extends AsyncTask<String, String, String> {
-        int success = 0;
-        String msg = "";
-        String username;
-        String password;
-
-        VerifyTask(String username,String password){
-            this.username = username;
-            this.password = password;
-        }
-        /**
-         * getting All products from url
-         * */
-        protected String doInBackground(String... args) {
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("username", username));
-            params.add(new BasicNameValuePair("password", password));
-            // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(ConnectionParams.URL_CHEF_LOGIN, "POST", params);
-            Log.d(TAG, "with the username: " + username);
-            Log.d(TAG,"with the password: "+password);
-            Log.d(TAG,"json received is: "+json.toString());
-
-            try {
-                // Checking for SUCCESS TAG
-                success = json.getInt(TAG_SUCCESS);
-                msg = json.getString(TAG_MSG);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            if (success == 1) {
-                Log.d(TAG, "login succeed!");
-            } else {
-                SessionManager.logout(MainActivity.this);
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                Log.d(TAG, "login failed!");
-                finish();
-            }
-        }
-
     }
 }
